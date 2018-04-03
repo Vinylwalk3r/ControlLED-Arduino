@@ -40,9 +40,19 @@ void setup()
 void loop() 
 {
 
- if (=true)
- {
-  SoundIntensity = analogRead(Mic);  //reads the sound signal and saves it as a number between 0 and 1023
+FlashingSound();
+SpinEffect();
+  
+ 
+  
+}
+
+
+
+void FlashingSound() // flashes the LEDs in beat with the music
+{
+  //reads the sound signal and saves it as a number between 0 and 1023
+  SoundIntensity = analogRead(Mic);  
 
   // Makes all the LEDs flash with the music. Adjust the number with * for better precision
   analogWrite(Right1, SoundIntensity *15);  //assigns the pin the value of variable "SoundIntensity";
@@ -53,39 +63,32 @@ void loop()
   analogWrite(Left2, SoundIntensity *15);
   analogWrite(Left3, SoundIntensity *15);
   analogWrite(Left4, SoundIntensity *15); 
-  }
- 
-  else if (=true)
-  {
-  digitalWrite(Right1, HIGH);
-  digitalWrite(Right2, HIGH;
-  digitalWrite(Right3, HIGH);
-  
-  digitalWrite(Right1, LOW;
-  digitalWrite(Right4, HIGH);
-  digitalWrite(Right2, LOW);
-  
-  digitalWrite(Right1, HIGH);
-  digitalWrite(Right3, LOW;
-  digitalWrite(Right2, HIGH);
-  
-  digitalWrite(Right4, HIGH;
-  digitalWrite(Right3, LOW);
-  digitalWrite(Right2, HIGH;
-  
-  digitalWrite(Right1, HIGH);
-  digitalWrite(Right2, HIGH;
-  }
- 
-  else if (=true)
-  {
-  
-  }
-  else 
-  {
-  
 }
+
+void SpinEffect() //creates a infinte loopable spin effect
+{
+  digitalWrite(Right4, HIGH);
+  digitalWrite(Left4, HIGH);
+  digitalWrite(Right2, LOW);
+  digitalWrite(Left2, LOW);
   
- 
+  digitalWrite(Right1, HIGH);
+  digitalWrite(Left1, HIGH);
+  digitalWrite(Right3, LOW);
+  digitalWrite(Left3, LOW);
   
+  digitalWrite(Right2, HIGH);
+  digitalWrite(Left2, HIGH);
+  digitalWrite(Right4, LOW);
+  digitalWrite(Left4, LOW);
+  
+  digitalWrite(Right3, HIGH);
+  digitalWrite(Left3, HIGH);
+  digitalWrite(Right1, LOW);
+  digitalWrite(Left1, LOW);
+  
+  digitalWrite(Right4, HIGH);
+  digitalWrite(Left4, HIGH);
+  digitalWrite(Right2, LOW);
+  digitalWrite(Left2, LOW);
 }
