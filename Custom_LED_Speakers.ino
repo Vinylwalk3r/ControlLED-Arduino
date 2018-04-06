@@ -254,7 +254,7 @@ unsigned long currentMillis = millis();
     SpinEffect();
   }
   for (buttonPushCounter = 3) {
-    //place new effect here
+    RandomEffect();
   }
   for (buttonPushCounter = 4) {
     //place new effect here
