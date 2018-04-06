@@ -21,7 +21,6 @@
 
 #define Mic A0 //Input from the microphone
 
-
 int SoundIntensity; // Variable to hold the intensity of the analog sound signal
 
 // Variables for the button
@@ -29,9 +28,19 @@ int buttonPushCounter = 0;   // Counter for the number of button presses
 int buttonState = 0;         // Current state of the button
 int lastButtonState = 0;     // Previous state of the button
 
-// Variables for the 
+// Variables for the temp sensor and fans
 int currentTemp; // Stores the current temperature
 int manualFanSpeed; // Holds the reading from the fanregulator
+
+int LeftRandom; // Holds random numbers for the left / right speaker
+int RightRandom;
+
+unsigned long previousMillisTemp = 0; // time since last run of TempCheck
+unsigned long previousMillisButton = 0; // time since last run of ButtonCheck
+
+// constants won't change:
+const long interval = 1000; // interval at which to do TempCheck (milliseconds)
+const long interval = 5000; // interval at which to do ButtonCheck (milliseconds) 
 
 void setup() 
 {
@@ -57,6 +66,8 @@ void setup()
   pinMode(Left2, OUTPUT);
   pinMode(Left3, OUTPUT);
   pinMode(Left4, OUTPUT);
+
+   unsigned char pins = {3, 4, 5, 6, 7, 8, 9, 10}; // write all pins you want to be able to call here
 }
 
 void FlashingSound() // flashes the LEDs in beat with the music
@@ -103,10 +114,41 @@ void SpinEffect() //creates a infinte loopable spin effect
   digitalWrite(Left2, LOW);
 }
 
-void DimEffect() // dims the leds on and off
+void RandomEffect() // Lights the LEDs in a random sequense
 {
+  LeftRandom = random(4);
+  RightRandom = random(4);
 
+  massDigitalWrite(pins, 3, 4, 5, 6, 7, 8, 9, HIGH);
 
+    if (LeftRandom = 1) {
+  digitalWrite(Left1, HIGH)
+  }
+    if (LeftRandom = 2) {
+  digitalWrite(Left2, HIGH)
+  }
+    if (LeftRandom = 3) {
+  digitalWrite(Left3, HIGH)
+  }
+    if (LeftRandom = 4) {
+  digitalWrite(Left4, HIGH)
+  }
+    if (RightRandom = 1) {
+  digitalWrite(Right1, HIGH)
+  }
+    if (RightRandom = 2) {
+  digitalWrite(Right2, HIGH)
+  }
+    if (RightRandom = 2) {
+  digitalWrite(Right2, HIGH)
+  }
+    if (RightRandom = 3) {
+  digitalWrite(Right3, HIGH)
+  }
+    if (RightRandom =41) {
+  digitalWrite(Right4, HIGH)
+  }
+      
 }
 
 void TempCheck() // call this to check the temps and control the fans 
@@ -152,9 +194,7 @@ float temperatureC = (voltage - 0.5) * 100 ;
   }
 }
 
-
-
-void loop() 
+void ButtonCheck() // call this to check the button states
 {
   buttonState = digitalRead(ModeSwitch); // This part checks the button and counts how many times the button has been pushed
  
@@ -177,6 +217,34 @@ void loop()
   }
   
   lastButtonState = buttonState;   // save the current state as the last state, for next time through the loop
+}
+
+void massDigitalWrite(unsigned char pins[], unsigned char length, unsigned char state) // Call this to make a mass digitalWrite
+{
+ unsigned char i; // Creates a temp char i
+ for (i = 0; i < length; i++) // for loop that runs infinitly
+   digitalWrite(pins, state); // a digitalWrite which gets its pin number and state sent to it when its called
+}
+
+
+void loop() 
+{
+unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillisTemp >= intervalTemp) {
+    // save the last time the code ran
+    previousMillisTemp = currentMillis;
+  
+  TempCheck();
+  }
+
+  if (currentMillis - previousMillisButton >= intervalButton) {
+    // save the last time the code ran
+    previousMillisButton = currentMillis;
+  
+  ButtonCheck();
+  }
+
 
   // this checks the value of buttonPushCounter and selects the appropriate effect
   for (buttonPushCounter = 1) {
