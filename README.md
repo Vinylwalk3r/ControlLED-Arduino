@@ -1,6 +1,6 @@
 # Custom_LED_Speakers
 
-This is a WIP (Work in Progress). Many features to be added. Im updating as im going along
+This is a WIP (Work in Progress). Many features to be added. Im updating as im going along. also, nothing is tested yet, so if you would make something like this, and use my code, I dont promis anything at the moment. Until the testing rig is finished, I'll just say, this is WIP and anything and nothing can work!
 
 
 
@@ -11,12 +11,18 @@ Features
 ¤ Multiple effects, for now:
 Spin and flash-to-the-beat
 
+¤ Switching between effects
+
+
+Working on rigt now:
+
+¤ Support for manual control over fans, and autoswitching between manual / auto (probably not PWM)
+
+
 
 
 Planned Features
 
 ¤ Atleast two more effects
 
-¤ Switching between effects
-
-¤ Support for manual control over fans, and autoswitching between manual / auto (probably not PWM)
+¤ anything more I can come up with
