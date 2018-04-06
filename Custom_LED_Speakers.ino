@@ -103,45 +103,14 @@ void SpinEffect() //creates a infinte loopable spin effect
   digitalWrite(Left2, LOW);
 }
 
-void loop() 
+void DimEffect() // dims the leds on and off
 {
 
-  
-  buttonState = digitalRead(ModeSwitch); // This part checks the button and counts how many times the button has been pushed
- 
-    if (buttonState != lastButtonState) { // compare the buttonState to its previous state
-      
-      if (buttonState == HIGH) {  // if the state has changed, increment the counter
-        buttonPushCounter++;  // if the current state is HIGH then the button went from off to on
-      } 
-      
-      else {
-      // if the current state is LOW then the button went from on to off:
-      }
-    
-      delay(50); // Delay a little bit to avoid bouncing
 
-    if (buttonPushCounter = 5)
-    {
-    buttonPushCounter = 0
-    }
-  }
-lastButtonState = buttonState;   // save the current state as the last state, for next time through the loop
-
-// this checks the value of buttonPushCounter and selects the appropriate effect
-for (buttonPushCounter = 1) {
-  FlashingSound();
-}
-for (buttonPushCounter = 2) {
-  SpinEffect();
-}
-for (buttonPushCounter = 3) {
-  //place new effect here
-}
-for (buttonPushCounter = 4) {
-  //place new effect here
 }
 
+void TempCheck() // call this to check the temps and control the fans 
+{
 //comment this part out if you dont have a temp sensor - fan control setup.
 currentTemp = analogRead(TempSensor); // values range from 0 -1023
 
@@ -153,35 +122,73 @@ voltage /= 1024.0;
 float temperatureC = (voltage - 0.5) * 100 ;  
 
 // checks if the manual override regulator has been used. If not, cthis code runs (automatic fan control)
-if (FanRegulator = 0) {
-  if (temperatureC >= 19) { //turns of the fans at 19 degress Celsius or below
-    analogWrite(FanSpeed, 0)
+  if (FanRegulator = 0) {
+    if (temperatureC >= 19) { //turns of the fans at 19 degress Celsius or below
+      analogWrite(FanSpeed, 0)
+    }
+    else if (temperatureC >= 20) { // fans at 5% at 20c or under
+      analogWrite(FanSpeed, 50)
+    }
+    else if (temperatureC >= 25) { // ~20% fanspeed at 25c
+      analogWrite(FanSpeed, 250)
+    }
+    else if (temperatureC >= 30) { // 40% fanspeed at 30c
+      analogWrite(FanSpeed, 400)
+    }
+    else if (temperatureC >= 35) { // 60% fanspeed at 35c
+      analogWrite(FanSpeed, 600)
+    }
+    else if (temperatureC >= 45) { // 80% fanspeed at 40c
+      analogWrite(FanSpeed, 800)
+    }
+    else if (temperatureC >= 50) { //fans at full speed at 50 degress Celsius
+      analogWrite(FanSpeed, 1023)
+    }
   }
-  else if (temperatureC >= 20) { // fans at 5% at 20c or under
-    analogWrite(FanSpeed, 50)
-  }
-  else if (temperatureC >= 25) { // ~20% fanspeed at 25c
-    analogWrite(FanSpeed, 250)
-  }
-  else if (temperatureC >= 30) { // 40% fanspeed at 30c
-    analogWrite(FanSpeed, 400)
-  }
-  else if (temperatureC >= 35) { // 60% fanspeed at 35c
-    analogWrite(FanSpeed, 600)
-  }
-  else if (temperatureC >= 45) { // 80% fanspeed at 40c
-    analogWrite(FanSpeed, 800)
-  }
-  else if (temperatureC >= 50) { //fans at full speed at 50 degress Celsius
-    analogWrite(FanSpeed, 1023)
+  else { // if the manual override regulator has been moved, this code runs (manual fan control)
+    manualFanSpeed = analogRead(FanRegulator); // reads the setting of the fan regulator and stores it in manualFanSpeed
+
+    analogWrite(FanSpeed, manualFanSpeed); // assigns the values of manualFanSpeed to the fans
   }
 }
 
-else { // if the manual override regulator has been moved, this code runs (manual fan control)
- manualFanSpeed = analogRead(FanRegulator); // reads the setting of the fan regulator and stores it in manualFanSpeed
-
- analogWrite(FanSpeed, manualFanSpeed); // assigns the values of manualFanSpeed to the fans
-}
 
 
+void loop() 
+{
+  buttonState = digitalRead(ModeSwitch); // This part checks the button and counts how many times the button has been pushed
+ 
+    if (buttonState != lastButtonState) { // compare the buttonState to its previous state
+      
+      if (buttonState == HIGH) {  // if the state has changed, increment the counter
+        buttonPushCounter++;  // if the current state is HIGH then the button went from off to on
+      } 
+      
+      else {
+        // if the current state is LOW then the button went from on to off:
+      }
+    
+      delay(50); // Delay a little bit to avoid bouncing
+
+    if (buttonPushCounter = 5)
+    {
+    buttonPushCounter = 0
+    }
+  }
+  
+  lastButtonState = buttonState;   // save the current state as the last state, for next time through the loop
+
+  // this checks the value of buttonPushCounter and selects the appropriate effect
+  for (buttonPushCounter = 1) {
+    FlashingSound();
+  }
+  for (buttonPushCounter = 2) {
+    SpinEffect();
+  }
+  for (buttonPushCounter = 3) {
+    //place new effect here
+  }
+  for (buttonPushCounter = 4) {
+    //place new effect here
+  }
 }
