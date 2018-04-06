@@ -227,7 +227,7 @@ void massDigitalWrite(unsigned char pins[], unsigned char length, unsigned char 
 }
 
 
-void loop() 
+void loop()
 {
 unsigned long currentMillis = millis();
 
@@ -244,7 +244,6 @@ unsigned long currentMillis = millis();
   
   ButtonCheck();
   }
-
 
   // this checks the value of buttonPushCounter and selects the appropriate effect
   for (buttonPushCounter = 1) {
