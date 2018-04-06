@@ -16,7 +16,7 @@
 
 #define TempSensor A1 // Temperature sensor for the amplifiers
 
-#define FanRegulator A2 // Manual regulator for the fans
+#define FanRegulator 2 // Manual regulator for the fans
 #define FanSpeed A3 // connect the fans here
 
 #define Mic A0 //Input from the microphone
@@ -39,8 +39,10 @@ unsigned long previousMillisTemp = 0; // time since last run of TempCheck
 unsigned long previousMillisButton = 0; // time since last run of ButtonCheck
 
 // constants won't change:
-const long interval = 1000; // interval at which to do TempCheck (milliseconds)
-const long interval = 5000; // interval at which to do ButtonCheck (milliseconds) 
+const long intervalTemp = 1000; // interval at which to do TempCheck (milliseconds)
+const long intervalButton = 5000; // interval at which to do ButtonCheck (milliseconds) 
+
+// unsigned char pins = {2, 3, 4,}; // write all pins you want to be able to call here
 
 void setup() 
 {
@@ -65,11 +67,16 @@ void setup()
   pinMode(Left1, OUTPUT);
   pinMode(Left2, OUTPUT);
   pinMode(Left3, OUTPUT);
-  pinMode(Left4, OUTPUT);
-
-   unsigned char pins = {3, 4, 5, 6, 7, 8, 9, 10}; // write all pins you want to be able to call here
+  pinMode(Left4, OUTPUT); 
 }
 
+/* void massDigitalWrite(unsigned char pins[], unsigned char length, unsigned char state) // Call this to make a mass digitalWrite
+{
+ unsigned char i; // Creates a temp char i
+ for (i = 0; i < length; i++) // for loop that runs infinitly
+   digitalWrite(pins, state); // a digitalWrite which gets its pin number and state sent to it when its called
+}
+*/
 void FlashingSound() // flashes the LEDs in beat with the music
 {
   //reads the sound signal and saves it as a number between 0 and 1023
@@ -119,34 +126,34 @@ void RandomEffect() // Lights the LEDs in a random sequense
   LeftRandom = random(4);
   RightRandom = random(4);
 
-  massDigitalWrite(pins, 3, 4, 5, 6, 7, 8, 9, HIGH);
+//  massDigitalWrite(pins, Right1, HIGH);
 
     if (LeftRandom = 1) {
-  digitalWrite(Left1, HIGH)
+  digitalWrite(Left1, HIGH);
   }
     if (LeftRandom = 2) {
-  digitalWrite(Left2, HIGH)
+  digitalWrite(Left2, HIGH);
   }
     if (LeftRandom = 3) {
-  digitalWrite(Left3, HIGH)
+  digitalWrite(Left3, HIGH);
   }
     if (LeftRandom = 4) {
-  digitalWrite(Left4, HIGH)
+  digitalWrite(Left4, HIGH);
   }
     if (RightRandom = 1) {
-  digitalWrite(Right1, HIGH)
+  digitalWrite(Right1, HIGH);
   }
     if (RightRandom = 2) {
-  digitalWrite(Right2, HIGH)
+  digitalWrite(Right2, HIGH);
   }
     if (RightRandom = 2) {
-  digitalWrite(Right2, HIGH)
+  digitalWrite(Right2, HIGH);
   }
     if (RightRandom = 3) {
-  digitalWrite(Right3, HIGH)
+  digitalWrite(Right3, HIGH);
   }
     if (RightRandom =41) {
-  digitalWrite(Right4, HIGH)
+  digitalWrite(Right4, HIGH);
   }
       
 }
@@ -163,28 +170,29 @@ voltage /= 1024.0;
 //converting from 10 mv per degree wit 500 mV offset to degrees ((volatge - 500mV) times 100)
 float temperatureC = (voltage - 0.5) * 100 ;  
 
-// checks if the manual override regulator has been used. If not, cthis code runs (automatic fan control)
-  if (FanRegulator = 0) {
+// checks if the manual override regulator has been used. If not, this code runs (automatic fan control)
+  manualFanSpeed = analogRead(FanRegulator);
+  if (manualFanSpeed = 0) {
     if (temperatureC >= 19) { //turns of the fans at 19 degress Celsius or below
-      analogWrite(FanSpeed, 0)
+      analogWrite(FanSpeed, 0);
     }
     else if (temperatureC >= 20) { // fans at 5% at 20c or under
-      analogWrite(FanSpeed, 50)
+      analogWrite(FanSpeed, 50);
     }
     else if (temperatureC >= 25) { // ~20% fanspeed at 25c
-      analogWrite(FanSpeed, 250)
+      analogWrite(FanSpeed, 250);
     }
     else if (temperatureC >= 30) { // 40% fanspeed at 30c
-      analogWrite(FanSpeed, 400)
+      analogWrite(FanSpeed, 400);
     }
     else if (temperatureC >= 35) { // 60% fanspeed at 35c
-      analogWrite(FanSpeed, 600)
+      analogWrite(FanSpeed, 600);
     }
     else if (temperatureC >= 45) { // 80% fanspeed at 40c
-      analogWrite(FanSpeed, 800)
+      analogWrite(FanSpeed, 800);
     }
     else if (temperatureC >= 50) { //fans at full speed at 50 degress Celsius
-      analogWrite(FanSpeed, 1023)
+      analogWrite(FanSpeed, 1023);
     }
   }
   else { // if the manual override regulator has been moved, this code runs (manual fan control)
@@ -212,18 +220,11 @@ void ButtonCheck() // call this to check the button states
 
     if (buttonPushCounter = 5)
     {
-    buttonPushCounter = 0
+    buttonPushCounter = 0;
     }
   }
   
   lastButtonState = buttonState;   // save the current state as the last state, for next time through the loop
-}
-
-void massDigitalWrite(unsigned char pins[], unsigned char length, unsigned char state) // Call this to make a mass digitalWrite
-{
- unsigned char i; // Creates a temp char i
- for (i = 0; i < length; i++) // for loop that runs infinitly
-   digitalWrite(pins, state); // a digitalWrite which gets its pin number and state sent to it when its called
 }
 
 
@@ -246,16 +247,17 @@ unsigned long currentMillis = millis();
   }
 
   // this checks the value of buttonPushCounter and selects the appropriate effect
-  for (buttonPushCounter = 1) {
-    FlashingSound();
+  if (buttonPushCounter = 1) {
+    FlashingSound;
   }
-  for (buttonPushCounter = 2) {
-    SpinEffect();
+  if (buttonPushCounter = 2) {
+    SpinEffect;
   }
-  for (buttonPushCounter = 3) {
+  if (buttonPushCounter = 3) {
     RandomEffect();
   }
-  for (buttonPushCounter = 4) {
+  if (buttonPushCounter = 4); {
     //place new effect here
   }
 }
+
