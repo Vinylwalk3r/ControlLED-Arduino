@@ -10,12 +10,15 @@
 #define Left3 9 
 #define Left4 10 
 
-// All the extra light, will be renamed if installed
-#define Extra1 11 
-#define Extra2 12
-
+// The button for switching profile
+#define ModeSwitch 12 
 
 #define Mic A0 //Input from the microphone
+
+// Variables will change:
+int buttonPushCounter = 0;   // counter for the number of button presses
+int buttonState = 0;         // current state of the button
+int lastButtonState = 0;     // previous state of the button
 
 int SoundIntensity; //the variable to hold the intensity of the analog sound signal
 
@@ -36,18 +39,6 @@ void setup()
   pinMode(Left3, OUTPUT);
   pinMode(Left4, OUTPUT);
 }
-
-void loop() 
-{
-
-FlashingSound();
-SpinEffect();
-  
- 
-  
-}
-
-
 
 void FlashingSound() // flashes the LEDs in beat with the music
 {
@@ -91,4 +82,48 @@ void SpinEffect() //creates a infinte loopable spin effect
   digitalWrite(Left4, HIGH);
   digitalWrite(Right2, LOW);
   digitalWrite(Left2, LOW);
+}
+
+void loop() 
+{
+
+  
+  buttonState = digitalRead(ModeSwitch); // This part checks the button and counts how many times the button has been pushed
+ 
+    if (buttonState != lastButtonState) { // compare the buttonState to its previous state
+      
+      if (buttonState == HIGH) {  // if the state has changed, increment the counter
+        buttonPushCounter++;  // if the current state is HIGH then the button went from off to on
+      } 
+      
+      else {
+      // if the current state is LOW then the button went from on to off:
+      }
+    
+      delay(50); // Delay a little bit to avoid bouncing
+
+    if (buttonPushCounter = 5)
+    {
+    buttonPushCounter = 0
+    }
+  }
+lastButtonState = buttonState;   // save the current state as the last state, for next time through the loop
+
+// this checks the value of buttonPushCounter and selects the appropriate effect
+for (buttonPushCounter = 1) {
+  FlashingSound();
+}
+for (buttonPushCounter = 2) {
+  SpinEffect();
+}
+for (buttonPushCounter = 3) {
+  //place new effect here
+}
+for (buttonPushCounter = 4) {
+  //place new effect here
+}
+
+ 
+ 
+  
 }
