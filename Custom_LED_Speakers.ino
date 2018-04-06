@@ -10,23 +10,40 @@
 #define Left3 9 
 #define Left4 10 
 
-// The button for switching profile
-#define ModeSwitch 12 
+#define ModeSwitch 12 // Button for switching profile
+
+#define TempSensor A1 // Temperature sensor for the amplifiers
+
+#define FanRegulator A2 // Manual regulator for the fans
 
 #define Mic A0 //Input from the microphone
 
-// Variables will change:
-int buttonPushCounter = 0;   // counter for the number of button presses
-int buttonState = 0;         // current state of the button
-int lastButtonState = 0;     // previous state of the button
 
-int SoundIntensity; //the variable to hold the intensity of the analog sound signal
+int SoundIntensity; // Variable to hold the intensity of the analog sound signal
+
+// Variables for the button
+int buttonPushCounter = 0;   // Counter for the number of button presses
+int buttonState = 0;         // Current state of the button
+int lastButtonState = 0;     // Previous state of the button
+
+// Variables for the 
+int currentTemp; // Stores the current temperature
+
+#define aref_voltage 3.3 // tie 3.3V to ARef
 
 void setup() 
 {
   Serial.begin(9600);
   
+  // If you want to set the aref to something other than 5v
+  analogReference(EXTERNAL);
+
+  pinMode(ModeSwitch, INPUT);
+  pinMode(TempSensor, INPUT);
+  pinMode(FanRegulator, INPUT);
   pinMode(Mic, INPUT);
+
+  pinMode(Fans, OUTPUT);
 
   //Right SBW
   pinMode(Right1, OUTPUT);
@@ -123,7 +140,26 @@ for (buttonPushCounter = 4) {
   //place new effect here
 }
 
+//comment this part out if you dont have a temp sensor - fan control setup.
+currentTemp = analogRead(TempSensor); // values range from 0 -1023
+
+// converting that reading to voltage, which is based off the reference voltage
+float voltage = currentTemp * aref_voltage;
+voltage /= 1024.0; 
  
- 
-  
+//converting from 10 mv per degree wit 500 mV offset to degrees ((volatge - 500mV) times 100)
+float temperatureC = (voltage - 0.5) * 100 ;  
+
+if (temperatureC >= 20)
+{
+  analogWrite(Fans)
+
+
+}
+
+
+
+
+
+
 }
