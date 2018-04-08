@@ -39,8 +39,7 @@ unsigned long previousMillisTemp = 0; // time since last run of TempCheck
 unsigned long previousMillisButton = 0; // time since last run of ButtonCheck
 
 // constants won't change:
-const long intervalTemp = 1000; // interval at which to do TempCheck (milliseconds)
-const long intervalButton = 5000; // interval at which to do ButtonCheck (milliseconds) 
+const long interval = 1000; // interval at which to do TempCheck (milliseconds)
 
 // unsigned char pins = {2, 3, 4,}; // write all pins you want to be able to call here
 
@@ -211,13 +210,7 @@ void ButtonCheck() // call this to check the button states
       if (buttonState == HIGH) {  // if the state has changed, increment the counter
         buttonPushCounter++;  // if the current state is HIGH then the button went from off to on
       } 
-      
-      else {
-        // if the current state is LOW then the button went from on to off:
-      }
     
-      delay(50); // Delay a little bit to avoid bouncing
-
     if (buttonPushCounter = 5)
     {
     buttonPushCounter = 0;
@@ -232,14 +225,14 @@ void loop()
 {
 unsigned long currentMillis = millis();
 
-  if (currentMillis - previousMillisTemp >= intervalTemp) {
+  if (currentMillis - previousMillisTemp >= interval) {
     // save the last time the code ran
     previousMillisTemp = currentMillis;
   
   TempCheck();
   }
 
-  if (currentMillis - previousMillisButton >= intervalButton) {
+  if (currentMillis - previousMillisButton >= interval) {
     // save the last time the code ran
     previousMillisButton = currentMillis;
   
@@ -256,8 +249,7 @@ unsigned long currentMillis = millis();
   if (buttonPushCounter = 3) {
     RandomEffect();
   }
-  if (buttonPushCounter = 4); {
+  /* if (buttonPushCounter = 4); {
     //place new effect here
-  }
+  }*/
 }
-
