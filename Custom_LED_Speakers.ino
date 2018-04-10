@@ -45,7 +45,7 @@ const long interval = 1000; // interval at which to do TempCheck (milliseconds)
 
 void setup() 
 {
-  Serial.begin(9600);
+  Serial.begin(9600); // Serial used for bluetooth
   
   // If you want to set the aref to something other than 5v
   analogReference(EXTERNAL);
@@ -157,21 +157,23 @@ void RandomEffect() // Lights the LEDs in a random sequense
       
 }
 
-void TempCheck() // call this to check the temps and control the fans 
-{
+void TempCheck() { 
+// call this to check the temps and control the fans, 
 //comment this part out if you dont have a temp sensor - fan control setup.
-currentTemp = analogRead(TempSensor); // values range from 0 -1023
-
-// converting that reading to voltage, which is based off the reference voltage
-float voltage = currentTemp * aref_voltage;
-voltage /= 1024.0; 
- 
-//converting from 10 mv per degree wit 500 mV offset to degrees ((volatge - 500mV) times 100)
-float temperatureC = (voltage - 0.5) * 100 ;  
 
 // checks if the manual override regulator has been used. If not, this code runs (automatic fan control)
-  manualFanSpeed = analogRead(FanRegulator);
+  manualFanSpeed = analogRead(FanRegulator); // reads the setting of the fan regulator and stores it in manualFanSpeed
+
   if (manualFanSpeed = 0) {
+    currentTemp = analogRead(TempSensor); // values range from 0 -1023
+
+    // converting that reading to voltage, which is based off the reference voltage
+    float voltage = currentTemp * aref_voltage;
+    voltage /= 1024.0; 
+ 
+    //converting from 10 mv per degree wit 500 mV offset to degrees ((volatge - 500mV) times 100)
+    float temperatureC = (voltage - 0.5) * 100 ;  
+
     if (temperatureC >= 19) { //turns of the fans at 19 degress Celsius or below
       analogWrite(FanSpeed, 0);
     }
@@ -195,8 +197,6 @@ float temperatureC = (voltage - 0.5) * 100 ;
     }
   }
   else { // if the manual override regulator has been moved, this code runs (manual fan control)
-    manualFanSpeed = analogRead(FanRegulator); // reads the setting of the fan regulator and stores it in manualFanSpeed
-
     analogWrite(FanSpeed, manualFanSpeed); // assigns the values of manualFanSpeed to the fans
   }
 }
@@ -253,3 +253,16 @@ unsigned long currentMillis = millis();
     //place new effect here
   }*/
 }
+
+
+
+   if(Serial.available() > 0)      // Send data only when you receive data:
+   {
+      data = Serial.read();        //Read the incoming data & store into data
+      Serial.print(data);          //Print Value inside data in Serial monitor
+      Serial.print("\n");        
+      if(data == '1')              // Checks whether value of data is equal to 1
+         digitalWrite(13, HIGH);   //If value is 1 then LED turns ON
+      else if(data == '0')         //  Checks whether value of data is equal to 0
+         digitalWrite(13, LOW);    //If value is 0 then LED turns OFF
+   }
