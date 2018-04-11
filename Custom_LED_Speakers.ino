@@ -35,15 +35,15 @@ int manualFanSpeed; // Holds the reading from the fanregulator
 int LeftRandom; // Holds random numbers for the left / right speaker
 int RightRandom;
 
-unsigned long previousMillisTemp = 0; // time since last run of TempCheck
-unsigned long previousMillisButton = 0; // time since last run of ButtonCheck
+unsigned long previousMillis = 0; // time since last run of the code
 
 // constants won't change:
 const long interval = 1000; // interval at which to do TempCheck (milliseconds)
 
-byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10};
+byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10}; // the pins to change in massDigitalWrite
 
-int data;
+int data; // the data from the phone via serial bluetooth
+int phoneFanSpeed; // the fan speed from the phone
 
 void setup()
 {
@@ -188,8 +188,11 @@ void TempCheck() {
       analogWrite(FanSpeed, 1023);
     }
   }
-  else { // if the manual override regulator has been moved, this code runs (manual fan control)
+  if (manualFanSpeed > 1) { // if the manual override regulator has been moved, this code runs (manual fan control)
     analogWrite(FanSpeed, manualFanSpeed); // assigns the values of manualFanSpeed to the fans
+  }
+  else {
+    analogWrite(FanSpeed, phoneFanSpeed);
   }
 }
 
@@ -223,7 +226,7 @@ void loop()
     Serial.print("\n");
   }
 
-  if (currentMillis - previousMillisTemp >= interval) {
+  if (currentMillis - previousMillisTemp >= interval || data == 1) {
     // save the last time the code ran
     previousMillisTemp = currentMillis;
 
@@ -232,32 +235,16 @@ void loop()
   }
 
   // this checks the value of buttonPushCounter and selects the appropriate effect
-  if (buttonPushCounter = 1 || data == 8) { // || means or, and we are gonna have to figure out a way to send commands from the app
+  if (buttonPushCounter = 1 || data == 2) { // || means or, and we are gonna have to figure out a way to send commands from the app
     FlashingSound;
   }
-  if (buttonPushCounter = 2) {
+  if (buttonPushCounter = 2 || data == 3) {
     SpinEffect;
   }
-  if (buttonPushCounter = 3) {
+  if (buttonPushCounter = 3 || data == 4) {
     RandomEffect();
   }
-  /* if (buttonPushCounter = 4); {
+  /* if (buttonPushCounter = 4 || data == 5); {
     //place new effect here
     }*/
 }
-
-/*
-   for (int i = 0; i < sizeof(segments); i++)
-  {
-    digitalWrite(segments[i], SoundIntensity * 15); //assigns the pin the value of variable "SoundIntensity";
-  }
- */
-
-
-
-/*
-      if(data == '1')              // Checks whether value of data is equal to 1
-      digitalWrite(13, HIGH);   //If value is 1 then LED turns ON
-   else if(data == '0')         //  Checks whether value of data is equal to 0
-      digitalWrite(13, LOW);    //If value is 0 then LED turns OFF
-*/
