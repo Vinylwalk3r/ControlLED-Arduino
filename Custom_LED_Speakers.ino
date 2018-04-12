@@ -40,7 +40,7 @@ unsigned long previousMillis = 0; // time since last run of the code
 // constants won't change:
 const long interval = 1000; // interval at which to do TempCheck (milliseconds)
 
-byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10}; // the pins to change in massDigitalWrite
+byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10}; // the pins to of the LEDs
 
 int data; // the data from the phone via serial bluetooth
 int phoneFanSpeed; // the fan speed from the phone
