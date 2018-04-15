@@ -42,7 +42,7 @@ const long interval = 1000; // interval at which to do TempCheck (milliseconds)
 
 byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10}; // the pins to of the LEDs
 
-int data;          // the data from the phone via serial bluetooth
+char data;          // the data from the phone via serial bluetooth
 int phoneFanSpeed; // the fan speed from the phone
 
 void setup()
@@ -207,14 +207,15 @@ void TempCheck()
       analogWrite(FanSpeed, 1023);
     }
   }
-  if (manualFanSpeed > 1)
-  {                                        // if the manual override regulator has been moved, this code runs (manual fan control)
+
+ // if (manualFanSpeed > 1)
+ // {                                        // if the manual override regulator has been moved, this code runs (manual fan control)
     analogWrite(FanSpeed, manualFanSpeed); // assigns the values of manualFanSpeed to the fans
-  }
-  else
-  {
-    analogWrite(FanSpeed, phoneFanSpeed);
-  }
+ /* }
+ // else
+ // {
+ //   analogWrite(FanSpeed, data == FAN //find some way to input fan speed);
+ }*/
 }
 
 void ButtonCheck() // call this to check the button states
@@ -248,29 +249,29 @@ void loop()
     Serial.print("\n");
   }
 
-  if (currentMillis - previousMillisTemp >= interval || data == 1)
+  if (currentMillis - previousMillisTemp >= interval || data == CHECKS OFF)
   {
     // save the last time the code ran
     previousMillisTemp = currentMillis;
 
     TempCheck();
 
-    if (data == nobutton)
+    if (data == DISABLE BUTTON)
     {
       ButtonCheck();
     }
   }
 
   // this checks the value of buttonPushCounter and selects the appropriate effect
-  if (buttonPushCounter = 1 || data == 2) // || means or, and we are gonna have to figure out a way to send commands from the app
+  if (buttonPushCounter = 1 || data == LIGHT FLASH) // || means or, and we are gonna have to figure out a way to send commands from the app
   {
     FlashingSound();
   }
-  if (buttonPushCounter = 2 || data == 3)
+  if (buttonPushCounter = 2 || data == LIGHT SPIN)
   {
     SpinEffect();
   }
-  if (buttonPushCounter = 3 || data == 4)
+  if (buttonPushCounter = 3 || data == LIGHT RANDOM)
   {
     RandomEffect();
   }
