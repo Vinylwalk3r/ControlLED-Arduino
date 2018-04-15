@@ -74,6 +74,14 @@ void massDigitalWrite()
   }
 }
 
+/* void DimEffect()
+{
+  for (int i = 0; i < sizeof(pins); i++)
+  {
+    analogWrite(pins[i], duty_cycle); //declaring them as outputs
+  }
+}*/
+
 void FlashingSound() // flashes the LEDs in beat with the music
 {
   //reads the sound signal and saves it as a number between 0 and 1023
@@ -208,13 +216,13 @@ void TempCheck()
     }
   }
 
- // if (manualFanSpeed > 1)
- // {                                        // if the manual override regulator has been moved, this code runs (manual fan control)
+ /* if (manualFanSpeed > 1)
+  {                                        // if the manual override regulator has been moved, this code runs (manual fan control)
     analogWrite(FanSpeed, manualFanSpeed); // assigns the values of manualFanSpeed to the fans
- /* }
- // else
- // {
- //   analogWrite(FanSpeed, data == FAN //find some way to input fan speed);
+  }
+  else
+  {
+    analogWrite(FanSpeed, data == FAN //find some way to input fan speed);
  }*/
 }
 
@@ -249,29 +257,29 @@ void loop()
     Serial.print("\n");
   }
 
-  if (currentMillis - previousMillisTemp >= interval || data == CHECKS OFF)
+  if (currentMillis - previousMillis >= interval || data == "CHECKS OFF")
   {
     // save the last time the code ran
-    previousMillisTemp = currentMillis;
+    previousMillis = currentMillis;
 
     TempCheck();
 
-    if (data == DISABLE BUTTON)
+    if (data == "DISABLE BUTTON")
     {
       ButtonCheck();
     }
   }
 
   // this checks the value of buttonPushCounter and selects the appropriate effect
-  if (buttonPushCounter = 1 || data == LIGHT FLASH) // || means or, and we are gonna have to figure out a way to send commands from the app
+  if (buttonPushCounter = 1 || data == "LIGHT FLASH") // || means or, and we are gonna have to figure out a way to send commands from the app
   {
     FlashingSound();
   }
-  if (buttonPushCounter = 2 || data == LIGHT SPIN)
+  if (buttonPushCounter = 2 || data == "LIGHT SPIN")
   {
     SpinEffect();
   }
-  if (buttonPushCounter = 3 || data == LIGHT RANDOM)
+  if (buttonPushCounter = 3 || data == "LIGHT RANDOM")
   {
     RandomEffect();
   }
