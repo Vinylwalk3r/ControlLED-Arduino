@@ -1,4 +1,8 @@
 #include <SoftwareSerial.h>
+#include"Wire.h"
+
+#define CommonInput A0
+#define AnalogPin 0                             // Selects pin number 0 of Analog header
 
 #define aref_voltage 3.3 // tie 3.3V to ARef
 
@@ -38,15 +42,14 @@
 
 #define ModeSwitch 28 // Button for switching profile
 
-#define TempSensor A1 // Temperature sensor for the amplifiers
+#define TempSensor A2 // Temperature sensor for the amplifiers
 
 #define FanRegulator 29 // Manual regulator for the fans
 #define FanSpeed A3     // connect the fans here
 
-#define Mic A0 //Input from the microphone
+#define Mic A1 //Input from the microphone
 
 SoftwareSerial mySerial(30, 31);
-byte dataFromBT;
 
 byte SoundIntensity; // Variable to hold the intensity of the analog sound signal
 
@@ -96,11 +99,11 @@ void setup()
   }
 }
 
-void massDigitalWrite()
+void massAnalogWrite()
 {
   for (int i = 0; i < sizeof(pins); i++)
   {
-    digitalWrite(pins[i], LOW); //turns off all LEDs
+    digitalWrite(pins[i], pinvalue); //turns off all LEDs
   }
 }
 
@@ -115,15 +118,15 @@ void Bluetooth()
   // Construct the command string fetching the bytes, sent by Android, one by one.
   while (mySerial.available())
   {
-    command = ((byte)mySerial.read());
+    command = ((byte)mySerial.read()); // Reads the serial port and adds the data to the byte "command"
 
-    if (command == ':')
+    if (command == ':') // Stops if a ":" is encounted
     {
       break;
     }
     else
     {
-      string += command;
+      string += command; // Puts the recived commands into string commands
     }
     // delay(1);
   }
@@ -133,36 +136,52 @@ void Bluetooth()
 
 void LEDconf()
 {
-    if (string == "All OFF") {
+  if (string == "All OFF")
+  {
     // Turn off all LEDs
-    massDigitalWrite();
-  } else if ( string == "RED ON") {
+    massAnalogWrite();
+  }
+  else if (string == "RED ON")
+  {
     // Turn on LED red
     digitalWrite(Right1R, HIGH);
-  } else if ( string == "GREEN ON" ) {
+  }
+  else if (string == "GREEN ON")
+  {
     // Turn on LEF green
     digitalWrite(Right1G, HIGH);
-  } else if ( string == "GREEN OFF" ) {
+  }
+  else if (string == "GREEN OFF")
+  {
     // Turn off LED green
     digitalWrite(Right1G, LOW);
-  } else if ( string == "BLUE ON" ) {
+  }
+  else if (string == "BLUE ON")
+  {
     // Turn on LED blue
     digitalWrite(Right1B, HIGH);
-  } else if ( string == "BLUE OFF" ) {
+  }
+  else if (string == "BLUE OFF")
+  {
     // Turn off LED blue
     digitalWrite(Right1B, LOW);
   }
 
-
-  if(string.startsWith("#")){
+  if (string.startsWith("#"))
+  {
     String value = string.substring(1);
-    if(value.startsWith("RED")){
+    if (value.startsWith("RED"))
+    {
       value = value.substring(3);
       analogWrite(Right1R, value.toInt());
-    } else if (value.startsWith("GREEN")) {
+    }
+    else if (value.startsWith("GREEN"))
+    {
       value = value.substring(5);
       analogWrite(Right1G, value.toInt());
-    } else if (value.startsWith("BLUE")) {
+    }
+    else if (value.startsWith("BLUE"))
+    {
       value = value.substring(4);
       analogWrite(Right1B, value.toInt());
     }
@@ -230,14 +249,11 @@ void loop()
 
     TempCheck();
   }
- 
+
   Bluetooth();
 
   LEDconf();
 }
-
-
-
 
 /*void FlashingSound() // flashes the LEDs in beat with the music
 {
