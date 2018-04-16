@@ -138,19 +138,19 @@ void LEDconf()
     massDigitalWrite();
   } else if ( string == "RED ON") {
     // Turn on LED red
-    digitalWrite(RED_PIN, HIGH);
+    digitalWrite(Right1R, HIGH);
   } else if ( string == "GREEN ON" ) {
     // Turn on LEF green
-    digitalWrite(GREEN_PIN, HIGH);
+    digitalWrite(Right1G, HIGH);
   } else if ( string == "GREEN OFF" ) {
     // Turn off LED green
-    digitalWrite(GREEN_PIN, LOW);
+    digitalWrite(Right1G, LOW);
   } else if ( string == "BLUE ON" ) {
     // Turn on LED blue
-    digitalWrite(BLUE_PIN, HIGH);
+    digitalWrite(Right1B, HIGH);
   } else if ( string == "BLUE OFF" ) {
     // Turn off LED blue
-    digitalWrite(BLUE_PIN, LOW);
+    digitalWrite(Right1B, LOW);
   }
 
 
@@ -158,15 +158,15 @@ void LEDconf()
     String value = string.substring(1);
     if(value.startsWith("RED")){
       value = value.substring(3);
-      analogWrite(RED_PIN, value.toInt());
+      analogWrite(Right1R, value.toInt());
     } else if (value.startsWith("GREEN")) {
       value = value.substring(5);
-      analogWrite(GREEN_PIN, value.toInt());
+      analogWrite(Right1G, value.toInt());
     } else if (value.startsWith("BLUE")) {
       value = value.substring(4);
-      analogWrite(BLUE_PIN, value.toInt());
+      analogWrite(Right1B, value.toInt());
     }
-
+  }
 }
 
 void TempCheck()
