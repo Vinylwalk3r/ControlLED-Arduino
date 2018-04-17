@@ -1,8 +1,4 @@
 #include <SoftwareSerial.h>
-#include"Wire.h"
-
-#define CommonInput A0
-#define AnalogPin 0                             // Selects pin number 0 of Analog header
 
 #define aref_voltage 3.3 // tie 3.3V to ARef
 
@@ -75,7 +71,10 @@ byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 
 String string;
 char command;
 
-void setup()
+string pinvalue
+
+    void
+    setup()
 {
   Serial.begin(57600); // Serial used for bluetooth
   // The data rate for the SoftwareSerial port needs to
@@ -167,7 +166,7 @@ void LEDconf()
     digitalWrite(Right1B, LOW);
   }
 
-  if (string.startsWith("#"))
+  /* if (string.startsWith("#"))
   {
     String value = string.substring(1);
     if (value.startsWith("RED"))
@@ -184,8 +183,8 @@ void LEDconf()
     {
       value = value.substring(4);
       analogWrite(Right1B, value.toInt());
-    }
-  }
+    } */
+}
 }
 
 void TempCheck()
@@ -238,6 +237,186 @@ void TempCheck()
   }
 }
 
+void SpinEffect() //creates a infinte loopable spin effect
+{
+  digitalWrite(Right4, HIGH);
+  digitalWrite(Left4, HIGH);
+  digitalWrite(Right2, LOW);
+  digitalWrite(Left2, LOW);
+
+  digitalWrite(Right1, HIGH);
+  digitalWrite(Left1, HIGH);
+  digitalWrite(Right3, LOW);
+  digitalWrite(Left3, LOW);
+
+  digitalWrite(Right2, HIGH);
+  digitalWrite(Left2, HIGH);
+  digitalWrite(Right4, LOW);
+  digitalWrite(Left4, LOW);
+
+  digitalWrite(Right3, HIGH);
+  digitalWrite(Left3, HIGH);
+  digitalWrite(Right1, LOW);
+  digitalWrite(Left1, LOW);
+
+  digitalWrite(Right4, HIGH);
+  digitalWrite(Left4, HIGH);
+  digitalWrite(Right2, LOW);
+  digitalWrite(Left2, LOW);
+}
+
+void FlashingSound() // flashes the LEDs in beat with the music
+{
+  //reads the sound signal and saves it as a number between 0 and 1023
+  SoundIntensity = analogRead(Mic);
+
+  // Makes all the LEDs flash with the music. Adjust the number with * for better precision
+  for (int i = 0; i < sizeof(pins); i++)
+  {
+    digitalWrite(pins[i], SoundIntensity * 15); //assigns the pin the value of variable "SoundIntensity";
+  }
+}
+
+void RandomEffect() // Lights the LEDs in a random sequense
+{
+  //Creates 3 byte values and generates random values
+  LeftRandom = random(4);
+  RightRandom = random(4);
+  LightRandom = random(3)
+
+      massDigitalWrite(pinvalue = LOW); // Släcker alla lamporna
+
+if ((currentMillis - previousMillis >= interval)
+{
+    if (LeftRandom = 1)
+    {
+      if (LightRandom == 1)
+      {
+        digitalWrite(Left1R, LightRandom);
+      }
+      else if (LightRandom == 2)
+      {
+        digitalWrite(Left1G, LightRandom);
+      }
+      else
+      {
+        digitalWrite(Left1B, LightRandom);
+      }
+    }
+    if (LeftRandom = 2)
+    {
+      if (LightRandom == 1)
+      {
+        digitalWrite(Left2R, LightRandom);
+      }
+      else if (LightRandom == 2)
+      {
+        digitalWrite(Left2G, LightRandom);
+      }
+      else
+      {
+        digitalWrite(Left2B, LightRandom);
+      }
+    }
+    if (LeftRandom = 3)
+    {
+      if (LightRandom == 1)
+      {
+        digitalWrite(Left3R, LightRandom);
+      }
+      else if (LightRandom == 2)
+      {
+        digitalWrite(Left3G, LightRandom);
+      }
+      else
+      {
+        digitalWrite(Left3B, LightRandom);
+      }
+    }
+    if (LeftRandom = 4)
+    {
+      if (LightRandom == 1)
+      {
+        digitalWrite(Left4R, LightRandom);
+      }
+      else if (LightRandom == 2)
+      {
+        digitalWrite(Left4G, LightRandom);
+      }
+      else
+      {
+        digitalWrite(Left4B, LightRandom);
+      }
+    }
+}
+  if ((currentMillis - previousMillis >= interval)
+{
+    if (RightRandom = 1)
+    {
+      if (LightRandom == 1)
+      {
+        digitalWrite(Right1R, LightRandom);
+      }
+      else if (LightRandom == 2)
+      {
+        digitalWrite(Right1G, LightRandom);
+      }
+      else
+      {
+        digitalWrite(Right1B, LightRandom);
+      }
+    }
+
+    if (RightRandom = 2)
+    {
+      if (LightRandom == 1)
+      {
+        digitalWrite(Right2R, LightRandom);
+      }
+      else if (LightRandom == 2)
+      {
+        digitalWrite(Right2G, LightRandom);
+      }
+      else
+      {
+        digitalWrite(Right2B, LightRandom);
+      }
+    }
+
+    if (RightRandom = 3)
+    {
+      if (LightRandom == 1)
+      {
+        digitalWrite(Right3R, LightRandom);
+      }
+      else if (LightRandom == 2)
+      {
+        digitalWrite(Right3G, LightRandom);
+      }
+      else
+      {
+        digitalWrite(Right3B, LightRandom);
+      }
+    }
+
+    if (RightRandom = 4)
+    {
+      if (LightRandom == 1)
+      {
+        digitalWrite(Right4R, LightRandom);
+      }
+      else if (LightRandom == 2)
+      {
+        digitalWrite(Right4G, LightRandom);
+      }
+      else
+      {
+        digitalWrite(Right4B, LightRandom);
+      }
+    }
+ }
+}
+
 void loop()
 {
   unsigned long currentMillis = millis();
@@ -254,15 +433,3 @@ void loop()
 
   LEDconf();
 }
-
-/*void FlashingSound() // flashes the LEDs in beat with the music
-{
-  //reads the sound signal and saves it as a number between 0 and 1023
-  SoundIntensity = analogRead(Mic);
-
-  // Makes all the LEDs flash with the music. Adjust the number with * for better precision
-  for (int i = 0; i < sizeof(pins); i++)
-  {
-    digitalWrite(pins[i], SoundIntensity * 15); //assigns the pin the value of variable "SoundIntensity";
-  }
-}*/
