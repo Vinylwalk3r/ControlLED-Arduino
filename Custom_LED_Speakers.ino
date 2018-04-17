@@ -24,17 +24,17 @@
 #define Left1G 16
 #define Left1B 17
 
-#define Left1R 18
-#define Left1G 19
-#define Left1B 20
+#define Left2R 18
+#define Left2G 19
+#define Left2B 20
 
-#define Left1R 21
-#define Left1G 22
-#define Left1B 23
+#define Left3R 21
+#define Left3G 22
+#define Left3B 23
 
-#define Left1R 24
-#define Left1G 25
-#define Left1B 26
+#define Left4R 24
+#define Left4G 25
+#define Left4B 26
 
 #define ModeSwitch 28 // Button for switching profile
 
@@ -60,6 +60,7 @@ int manualFanSpeed; // Holds the reading from the fanregulator
 
 byte LeftRandom; // Holds random numbers for the left / right speaker
 byte RightRandom;
+byte LightRandom;
 
 unsigned long previousMillis = 0; // time since last run of the code
 
@@ -71,10 +72,7 @@ byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 
 String string;
 char command;
 
-string pinvalue
-
-    void
-    setup()
+void setup()
 {
   Serial.begin(57600); // Serial used for bluetooth
   // The data rate for the SoftwareSerial port needs to
@@ -98,7 +96,7 @@ string pinvalue
   }
 }
 
-void massAnalogWrite()
+void massDigitalWrite()
 {
   for (int i = 0; i < sizeof(pins); i++)
   {
@@ -138,7 +136,7 @@ void LEDconf()
   if (string == "All OFF")
   {
     // Turn off all LEDs
-    massAnalogWrite();
+    massDigitalWrite());
   }
   else if (string == "RED ON")
   {
@@ -166,13 +164,13 @@ void LEDconf()
     digitalWrite(Right1B, LOW);
   }
 
-  /* if (string.startsWith("#"))
+  if (string.startsWith("#"))
   {
     String value = string.substring(1);
     if (value.startsWith("RED"))
     {
       value = value.substring(3);
-      analogWrite(Right1R, value.toInt());
+      digitalWrite(Right1R, value.toInt());
     }
     else if (value.startsWith("GREEN"))
     {
@@ -183,8 +181,8 @@ void LEDconf()
     {
       value = value.substring(4);
       analogWrite(Right1B, value.toInt());
-    } */
-}
+    }
+  }
 }
 
 void TempCheck()
@@ -239,7 +237,7 @@ void TempCheck()
 
 void SpinEffect() //creates a infinte loopable spin effect
 {
-  digitalWrite(Right4, HIGH);
+/*  digitalWrite(Right4, HIGH);
   digitalWrite(Left4, HIGH);
   digitalWrite(Right2, LOW);
   digitalWrite(Left2, LOW);
@@ -262,7 +260,7 @@ void SpinEffect() //creates a infinte loopable spin effect
   digitalWrite(Right4, HIGH);
   digitalWrite(Left4, HIGH);
   digitalWrite(Right2, LOW);
-  digitalWrite(Left2, LOW);
+  digitalWrite(Left2, LOW);*/
 }
 
 void FlashingSound() // flashes the LEDs in beat with the music
@@ -282,11 +280,12 @@ void RandomEffect() // Lights the LEDs in a random sequense
   //Creates 3 byte values and generates random values
   LeftRandom = random(4);
   RightRandom = random(4);
-  LightRandom = random(3)
+  LightRandom = random(3);
 
-      massDigitalWrite(pinvalue = LOW); // Släcker alla lamporna
+  massDigitalWrite(); // Släcker alla lamporna
+unsigned long currentMillis = millis();
 
-if ((currentMillis - previousMillis >= interval)
+if ((currentMillis - previousMillis) >= interval)
 {
     if (LeftRandom = 1)
     {
@@ -349,7 +348,7 @@ if ((currentMillis - previousMillis >= interval)
       }
     }
 }
-  if ((currentMillis - previousMillis >= interval)
+  if ((currentMillis - previousMillis) >= interval)
 {
     if (RightRandom = 1)
     {
@@ -421,7 +420,7 @@ void loop()
 {
   unsigned long currentMillis = millis();
 
-  if (currentMillis - previousMillis >= interval || command == "TEMP OFF:")
+  if (currentMillis - previousMillis >= interval)
   {
     // save the last time the code ran
     previousMillis = currentMillis;
