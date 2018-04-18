@@ -498,37 +498,36 @@ void FlashingSound() // flashes the LEDs in beat with the music
 {
   byte RandomColor;
 
-  //reads the sound signal and saves it as a number between 0 and 1023
-  SoundIntensity = analogRead(Mic);
-
   // Makes all the LEDs flash with the music. Adjust the number with * for better precision
   for (int i = 0; i < sizeof(pins); i++)
   {
-    RandomColor = random(3);
+    //reads the sound signal and saves it as a number between 0 and 1023
+    SoundIntensity = analogRead(Mic);
+    RandomColor = random(3); // Randomises a number between 1-3
 
     if (RandomColor == 1) //Makes a specific color flash each time
     {
-      digitalWrite(Redpins[i], SoundIntensity * 15); //assigns the pin the value of variable "SoundIntensity";
+      digitalWrite(Redpins[i], SoundIntensity * 15); //assigns the pin the value of variable "SoundIntensity", and lights only red pins
     }
     if (RandomColor == 2)
     {
-      digitalWrite(Greenpins[i], SoundIntensity * 15);
+      digitalWrite(Greenpins[i], SoundIntensity * 15);  // Lights only green pins
     }
     if (RandomColor == 3)
     {
-      digitalWrite(Bluepins[i], SoundIntensity * 15);
+      digitalWrite(Bluepins[i], SoundIntensity * 15); // Lights only the blue pins
     }
   }
 }
 
 void RandomEffect() // Lights the LEDs in a random sequense
 {
-  //Creates 3 byte values and generates random values
+  // Creates 3 byte values and generates random values
   LeftRandom = random(4);
   RightRandom = random(4);
   LightRandom = random(3);
 
-  massDigitalWrite(); // Släcker alla lamporna
+  massDigitalWrite(); // Turns off all LEDs
   unsigned long currentMillis = millis();
 
   if ((currentMillis - previousMillis) >= interval)
