@@ -1,3 +1,20 @@
+/*
+                ControlLED - Arduino
+                Made by: Vinylwalk3r
+This code is made for the Arduino Mega or similar boards.
+To be used with the ControlLED app, available on Play Store
+            
+            This program allow you to:
+¤ Control the lights on your speakers, setting cool effects
+¤ Measure the temp of your amplifier/-s
+¤ Autoadjust the fans to keep the amp cool or
+¤ Manually set the fan RPM
+
+Hope you find some good use for my work!
+   Everyone is free to use my code, 
+but please give credit where credit is due
+*/
+
 #include <SoftwareSerial.h>
 
 #define aref_voltage 3.3 // tie 3.3V to ARef
