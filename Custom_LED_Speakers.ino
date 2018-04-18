@@ -67,10 +67,24 @@ unsigned long previousMillis = 0; // time since last run of the code
 // constants won't change:
 const long interval = 1000; // interval at which to do TempCheck (milliseconds)
 
-byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26}; // the pins to of the LEDs
-
 String string;
 char command;
+
+byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26}; // the pins to of the LEDs
+byte Redpins[] = {3, 6, 9, 12, 15, 18, 21, 24};                                                          //Red pins
+byte Greenpins[] = {4, 7, 10, 13, 16, 19, 22, 25};                                                       //Green pins
+byte Bluepins[] = {5, 8, 11, 14, 17, 20, 23, 26};                                                        // Blue pins
+
+// A byte value which will be either 0, 127 or 255 depending
+// on if Red, Green o Blue LED should light up
+byte R1;
+byte R2;
+byte R3;
+byte R4;
+byte L1;
+byte L2;
+byte L3;
+byte L4;
 
 void setup()
 {
@@ -100,7 +114,7 @@ void massDigitalWrite()
 {
   for (int i = 0; i < sizeof(pins); i++)
   {
-    digitalWrite(pins[i], pinvalue); //turns off all LEDs
+    digitalWrite(pins[i], LOW); //turns off all LEDs
   }
 }
 
@@ -125,63 +139,114 @@ void Bluetooth()
     {
       string += command; // Puts the recived commands into string commands
     }
-    // delay(1);
   }
 
   Serial.println(string); // Print on the Monitor latest command recieved
-}
 
-void LEDconf()
-{
-  if (string == "All OFF")
+  // Right LEDs
+  if (string == "R1R HIGH") //Right1 Red LED
   {
-    // Turn off all LEDs
-    massDigitalWrite());
+    R1 = 0; // 0 = Red
   }
-  else if (string == "RED ON")
+  else if (string == "R1G HIGH")
   {
-    // Turn on LED red
-    digitalWrite(Right1R, HIGH);
+    R1 = 127; // 127 = Green
   }
-  else if (string == "GREEN ON")
+  else if (string == "R1B HIGH")
   {
-    // Turn on LEF green
-    digitalWrite(Right1G, HIGH);
-  }
-  else if (string == "GREEN OFF")
-  {
-    // Turn off LED green
-    digitalWrite(Right1G, LOW);
-  }
-  else if (string == "BLUE ON")
-  {
-    // Turn on LED blue
-    digitalWrite(Right1B, HIGH);
-  }
-  else if (string == "BLUE OFF")
-  {
-    // Turn off LED blue
-    digitalWrite(Right1B, LOW);
+    R1 = 255; //255 = Blue
   }
 
-  if (string.startsWith("#"))
+  if (string == "R2R HIGH")
   {
-    String value = string.substring(1);
-    if (value.startsWith("RED"))
-    {
-      value = value.substring(3);
-      digitalWrite(Right1R, value.toInt());
-    }
-    else if (value.startsWith("GREEN"))
-    {
-      value = value.substring(5);
-      analogWrite(Right1G, value.toInt());
-    }
-    else if (value.startsWith("BLUE"))
-    {
-      value = value.substring(4);
-      analogWrite(Right1B, value.toInt());
-    }
+    R2 = 0;
+  }
+  else if (string == "R2G HIGH")
+  {
+    R2 = 127;
+  }
+  else if (string == "R2B HIGH")
+  {
+    R2 = 255;
+  }
+
+  if (string == "R3R HIGH")
+  {
+    R3 = 0;
+  }
+  else if (string == "R3G HIGH")
+  {
+    R3 = 127;
+  }
+  else if (string == "R3B HIGH")
+  {
+    R3 = 255;
+  }
+
+  if (string == "R4R HIGH")
+  {
+    R4 = 0;
+  }
+  else if (string == "R4G HIGH")
+  {
+    R4 = 127;
+  }
+  else if (string == "R4B HIGH")
+  {
+    R4 = 255;
+  }
+
+  // Left LEDs
+  if (string == "L1R HIGH")
+  {
+    L1 = 0;
+  }
+  else if (string == "L1G HIGH")
+  {
+    L1 = 127;
+  }
+  else if (string == "L1B HIGH")
+  {
+    L1 = 255;
+  }
+
+  if (string == "L2R HIGH")
+  {
+    L2 = 0;
+  }
+  else if (string == "L2G HIGH")
+  {
+    L2 = 127;
+  }
+  else if (string == "L2B HIGH")
+  {
+    L2 = 255;
+  }
+
+  if (string == "L3R HIGH")
+  {
+    L3 = 0;
+  }
+  else if (string == "L3G HIGH")
+  {
+    L3 = 127;
+  }
+  else if (string == "L3B HIGH")
+  {
+    L3 = 255;
+  }
+
+  if (string == "R4R HIGH")
+  {
+    L4 = 0;
+  }
+  else if (string == "R4G HIGH")
+  {
+    L4 = 127;
+  }
+  else if (string == "R4B HIGH")
+  {
+    L4 = 255;
   }
 }
 
@@ -237,41 +302,197 @@ void TempCheck()
 
 void SpinEffect() //creates a infinte loopable spin effect
 {
-/*  digitalWrite(Right4, HIGH);
-  digitalWrite(Left4, HIGH);
-  digitalWrite(Right2, LOW);
-  digitalWrite(Left2, LOW);
+  if (R4 = 0)
+  {
+    digitalWrite(Right4R, HIGH);
+  }
+  else if (R4 = 127)
+  {
+    digitalWrite(Right4G, HIGH);
+  }
+  else
+  {
+    digitalWrite(Right4B, HIGH);
+  }
 
-  digitalWrite(Right1, HIGH);
-  digitalWrite(Left1, HIGH);
-  digitalWrite(Right3, LOW);
-  digitalWrite(Left3, LOW);
+  if (L4 = 0)
+  {
+    digitalWrite(Left4R, HIGH);
+  }
+  else if (L4 = 127)
+  {
+    digitalWrite(Left4G, HIGH);
+  }
+  else
+  {
+    digitalWrite(Left4B, HIGH);
+  }
 
-  digitalWrite(Right2, HIGH);
-  digitalWrite(Left2, HIGH);
-  digitalWrite(Right4, LOW);
-  digitalWrite(Left4, LOW);
+  digitalWrite(Right2R, LOW);
+  digitalWrite(Right2G, LOW);
+  digitalWrite(Right2B, LOW);
 
-  digitalWrite(Right3, HIGH);
-  digitalWrite(Left3, HIGH);
-  digitalWrite(Right1, LOW);
-  digitalWrite(Left1, LOW);
+  digitalWrite(Left2R, LOW);
+  digitalWrite(Left2G, LOW);
+  digitalWrite(Left2B, LOW);
+  if (R4 = 0)
+  {
+    digitalWrite(Right1R, HIGH);
+  }
+  else if (R4 = 127)
+  {
+    digitalWrite(Right1G, HIGH);
+  }
+  else
+  {
+    digitalWrite(Right1B, HIGH);
+  }
 
-  digitalWrite(Right4, HIGH);
-  digitalWrite(Left4, HIGH);
-  digitalWrite(Right2, LOW);
-  digitalWrite(Left2, LOW);*/
+  if (L1 = 0)
+  {
+    digitalWrite(Left1R, HIGH);
+  }
+  else if (L1 = 127)
+  {
+    digitalWrite(Left1G, HIGH);
+  }
+  else
+  {
+    digitalWrite(Left1B, HIGH);
+  }
+
+  digitalWrite(Right3R, LOW);
+  digitalWrite(Right3G, LOW);
+  digitalWrite(Right3B, LOW);
+
+  digitalWrite(Left3R, LOW);
+  digitalWrite(Left3G, LOW);
+  digitalWrite(Left3B, LOW);
+
+  if (R2 = 0)
+  {
+    digitalWrite(Right2R, HIGH);
+  }
+  else if (R2 = 127)
+  {
+    digitalWrite(Right2G, HIGH);
+  }
+  else
+  {
+    digitalWrite(Right2B, HIGH);
+  }
+
+  if (L2 = 0)
+  {
+    digitalWrite(Left2R, HIGH);
+  }
+  else if (L2 = 127)
+  {
+    digitalWrite(Left2G, HIGH);
+  }
+  else
+  {
+    digitalWrite(Left2B, HIGH);
+  }
+
+  digitalWrite(Right4R, LOW);
+  digitalWrite(Right4G, LOW);
+  digitalWrite(Right4B, LOW);
+
+  digitalWrite(Left4R, LOW);
+  digitalWrite(Left4G, LOW);
+  digitalWrite(Left4B, LOW);
+  if (R3 = 0)
+  {
+    digitalWrite(Right3R, HIGH);
+  }
+  else if (R3 = 127)
+  {
+    digitalWrite(Right3G, HIGH);
+  }
+  else
+  {
+    digitalWrite(Right3B, HIGH);
+  }
+
+  if (L3 = 0)
+  {
+    digitalWrite(Left3R, HIGH);
+  }
+  else if (L3 = 127)
+  {
+    digitalWrite(Left3G, HIGH);
+  }
+  else
+  {
+    digitalWrite(Left3B, HIGH);
+  }
+
+  digitalWrite(Right1R, LOW);
+  digitalWrite(Right1G, LOW);
+  digitalWrite(Right1B, LOW);
+
+  digitalWrite(Left1R, LOW);
+  digitalWrite(Left1G, LOW);
+  digitalWrite(Left1B, LOW);
+  if (R4 = 0)
+  {
+    digitalWrite(Right4R, HIGH);
+  }
+  else if (R4 = 127)
+  {
+    digitalWrite(Right4G, HIGH);
+  }
+  else
+  {
+    digitalWrite(Right4B, HIGH);
+  }
+  if (L4 = 0)
+  {
+    digitalWrite(Left4R, HIGH);
+  }
+  else if (L4 = 127)
+  {
+    digitalWrite(Left4G, HIGH);
+  }
+  else
+  {
+    digitalWrite(Left4B, HIGH);
+  }
+
+  digitalWrite(Right2R, LOW);
+  digitalWrite(Right2G, LOW);
+  digitalWrite(Right2B, LOW);
+
+  digitalWrite(Left2R, LOW);
+  digitalWrite(Left2G, LOW);
+  digitalWrite(Left2B, LOW);
 }
 
 void FlashingSound() // flashes the LEDs in beat with the music
 {
+  byte RandomColor;
+
   //reads the sound signal and saves it as a number between 0 and 1023
   SoundIntensity = analogRead(Mic);
 
   // Makes all the LEDs flash with the music. Adjust the number with * for better precision
   for (int i = 0; i < sizeof(pins); i++)
   {
-    digitalWrite(pins[i], SoundIntensity * 15); //assigns the pin the value of variable "SoundIntensity";
+    RandomColor = random(3);
+
+    if (RandomColor == 1) //Makes a specific color flash each time
+    {
+      digitalWrite(Redpins[i], SoundIntensity * 15); //assigns the pin the value of variable "SoundIntensity";
+    }
+    if (RandomColor == 2)
+    {
+      digitalWrite(Greenpins[i], SoundIntensity * 15);
+    }
+    if (RandomColor == 3)
+    {
+      digitalWrite(Bluepins[i], SoundIntensity * 15);
+    }
   }
 }
 
@@ -283,10 +504,10 @@ void RandomEffect() // Lights the LEDs in a random sequense
   LightRandom = random(3);
 
   massDigitalWrite(); // Släcker alla lamporna
-unsigned long currentMillis = millis();
+  unsigned long currentMillis = millis();
 
-if ((currentMillis - previousMillis) >= interval)
-{
+  if ((currentMillis - previousMillis) >= interval)
+  {
     if (LeftRandom = 1)
     {
       if (LightRandom == 1)
@@ -347,9 +568,9 @@ if ((currentMillis - previousMillis) >= interval)
         digitalWrite(Left4B, LightRandom);
       }
     }
-}
+  }
   if ((currentMillis - previousMillis) >= interval)
-{
+  {
     if (RightRandom = 1)
     {
       if (LightRandom == 1)
@@ -413,7 +634,7 @@ if ((currentMillis - previousMillis) >= interval)
         digitalWrite(Right4B, LightRandom);
       }
     }
- }
+  }
 }
 
 void loop()
@@ -429,6 +650,4 @@ void loop()
   }
 
   Bluetooth();
-
-  LEDconf();
 }
