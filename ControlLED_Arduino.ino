@@ -43,7 +43,7 @@
 #define FanRegulator 29 // Manual regulator for the fans
 #define Fan A3          // connect the fans here
 
-#define Mic A1 //Input from the microphone
+#define Mic A1 // Input from the microphone
 
 SoftwareSerial mySerial(30, 31);
 
@@ -71,8 +71,8 @@ String string;
 char command;
 
 byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26}; // the pins to of the LEDs
-byte Redpins[] = {3, 6, 9, 12, 15, 18, 21, 24};                                                          //Red pins
-byte Greenpins[] = {4, 7, 10, 13, 16, 19, 22, 25};                                                       //Green pins
+byte Redpins[] = {3, 6, 9, 12, 15, 18, 21, 24};                                                          // Red pins
+byte Greenpins[] = {4, 7, 10, 13, 16, 19, 22, 25};                                                       // Green pins
 byte Bluepins[] = {5, 8, 11, 14, 17, 20, 23, 26};                                                        // Blue pins
 
 // A byte value which will be either 0, 127 or 255 depending
@@ -105,10 +105,10 @@ void setup()
 
   pinMode(Fan, OUTPUT);
 
-  //make Right & Left SB pins outputs
+  // Makes Right & Left SB pins outputs
   for (int i = 0; i < sizeof(pins); i++)
   {
-    pinMode(pins[i], OUTPUT); //makes all LED pins outputs
+    pinMode(pins[i], OUTPUT); // Makes all LED pins outputs
   }
 }
 
@@ -116,7 +116,7 @@ void massDigitalWrite()
 {
   for (int i = 0; i < sizeof(pins); i++)
   {
-    digitalWrite(pins[i], LOW); //turns off all LEDs
+    digitalWrite(pins[i], LOW); // Turns off all LEDs
   }
 }
 
@@ -139,7 +139,7 @@ void Bluetooth()
     }
     else
     {
-      string += command; // Puts the recived commands into string commands
+      string += command; // Puts the recived commands into string
     }
   }
 
@@ -163,13 +163,13 @@ void Bluetooth()
   {
     EffectChoise = 2;
   }
-  else if (string == "RandomEffect") //Command for Random effect
+  else if (string == "RandomEffect") // Command for Random effect
   {
     EffectChoise = 3;
   }
 
   // Right LEDs
-  if (string == "R1R HIGH") //Right1 Red LED
+  if (string == "R1R HIGH") // Right1 Red LED
   {
     R1 = 0; // 0 = Red
   }
@@ -179,7 +179,7 @@ void Bluetooth()
   }
   else if (string == "R1B HIGH")
   {
-    R1 = 255; //255 = Blue
+    R1 = 255; // 255 = Blue
   }
 
   if (string == "R2R HIGH")
@@ -277,29 +277,29 @@ void Bluetooth()
 
 void TempCheck()
 {
-  // call this to check the temps and control the fans,
-  //comment this part out if you dont have a temp sensor - fan control setup.
+  // Call this to check the temps and control the fans,
+  // Comment this part out if you dont have a temp sensor - fan control setup.
 
-  // checks if the manual override regulator has been used. If not, this code runs (automatic fan control)
-  manualFanSpeed = analogRead(FanRegulator); // reads the setting of the fan regulator and stores it in manualFanSpeed
+  // Checks if the manual override regulator has been used. If not, this code runs (automatic fan control)
+  manualFanSpeed = analogRead(FanRegulator); // Reads the setting of the fan regulator and stores it in manualFanSpeed
 
   if (manualFanSpeed = 0)
   {
-    currentTemp = analogRead(TempSensor); // values range from 0 -1023
+    currentTemp = analogRead(TempSensor); // Values range from 0 -1023
 
-    // converting that reading to voltage, which is based off the reference voltage
+    // Converting that reading to voltage, which is based off the reference voltage
     float voltage = currentTemp * aref_voltage;
     voltage /= 1024.0;
 
-    //converting from 10 mv per degree wit 500 mV offset to degrees ((volatge - 500mV) times 100)
+    // Converting from 10 mv per degree wit 500 mV offset to degrees ((volatge - 500mV) times 100)
     float temperatureC = (voltage - 0.5) * 100;
 
     if (temperatureC >= 19)
-    { //turns of the fans at 19 degress Celsius or below
+    { // Turns of the fans at 19 degress Celsius or below
       analogWrite(Fan, 0);
     }
     else if (temperatureC >= 20)
-    { // fans at 5% at 20c or under
+    { // Fans at 5% at 20c or under
       analogWrite(Fan, 50);
     }
     else if (temperatureC >= 25)
@@ -319,13 +319,13 @@ void TempCheck()
       analogWrite(Fan, 800);
     }
     else if (temperatureC >= 50)
-    { //fans at full speed at 50 degress Celsius
+    { // Fans at full speed at 50 degress Celsius
       analogWrite(Fan, 1023);
     }
   }
 }
 
-void SpinEffect() //creates a infinte loopable spin effect
+void SpinEffect() // Creates a infinte loopable spin effect
 {
   if (R4 = 0)
   {
@@ -494,20 +494,20 @@ void SpinEffect() //creates a infinte loopable spin effect
   digitalWrite(Left2B, LOW);
 }
 
-void FlashingSound() // flashes the LEDs in beat with the music
+void FlashingSound() // Flashes the LEDs in beat with the music
 {
   byte RandomColor;
 
   // Makes all the LEDs flash with the music. Adjust the number with * for better precision
   for (int i = 0; i < sizeof(pins); i++)
   {
-    //reads the sound signal and saves it as a number between 0 and 1023
+    // Reads the sound signal and saves it as a number between 0 and 1023
     SoundIntensity = analogRead(Mic);
     RandomColor = random(3); // Randomises a number between 1-3
 
-    if (RandomColor == 1) //Makes a specific color flash each time
+    if (RandomColor == 1) // Makes a specific color flash each time
     {
-      digitalWrite(Redpins[i], SoundIntensity * 15); //assigns the pin the value of variable "SoundIntensity", and lights only red pins
+      digitalWrite(Redpins[i], SoundIntensity * 15); // Assigns the pin the value of variable "SoundIntensity", and lights only red pins
     }
     if (RandomColor == 2)
     {
@@ -667,12 +667,12 @@ void loop()
 
   if (currentMillis - previousMillis >= interval)
   {
-    // save the last time the code ran
+    // Save the last time the code ran
     previousMillis = currentMillis;
 
     TempCheck();
   }
-  Bluetooth(); //Checks the bluetooth connection
+  Bluetooth(); // Checks the bluetooth connection
 
   // Checks which effect is choosen and runs it
   if (EffectChoise = 1)
