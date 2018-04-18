@@ -41,7 +41,7 @@
 #define TempSensor A2 // Temperature sensor for the amplifiers
 
 #define FanRegulator 29 // Manual regulator for the fans
-#define Fan A3     // connect the fans here
+#define Fan A3          // connect the fans here
 
 #define Mic A1 //Input from the microphone
 
@@ -149,9 +149,9 @@ void Bluetooth()
   {
     String value = string.substring(1); // Skips the # letter
 
-      value = value.substring(8); // This skips over the 8 letters of F A N S P E E D
+    value = value.substring(8); // This skips over the 8 letters of F A N S P E E D
 
-      analogWrite(Fan, value.toInt()); //Writes the fanspeed value to the analog pin
+    analogWrite(Fan, value.toInt()); //Writes the fanspeed value to the analog pin
   }
 
   // Checks if a effect change command has been sent
