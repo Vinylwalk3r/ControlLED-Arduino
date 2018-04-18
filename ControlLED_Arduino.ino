@@ -528,7 +528,7 @@ void RandomEffect() // Lights the LEDs in a random sequense
   LightRandom = random(3);
 
   massDigitalWrite(); // Turns off all LEDs
-  unsigned long currentMillis = millis();
+  unsigned long currentMillis = millis(); // Reads the current millis for internal clock and stores it in value "currentmillis"
 
   if ((currentMillis - previousMillis) >= interval)
   {
