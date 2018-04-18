@@ -152,7 +152,7 @@ void Bluetooth()
       value = value.substring(8); // This skips over the 8 letters of F A N S P E E D
 
       analogWrite(Fan, value.toInt()); //Writes the fanspeed value to the analog pin
-
+  }
 
   // Checks if a effect change command has been sent
   if (string == "FlashEffect") // Command for Flash effect
