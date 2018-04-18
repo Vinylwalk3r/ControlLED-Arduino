@@ -86,6 +86,8 @@ byte L2;
 byte L3;
 byte L4;
 
+byte EffectChoise; // Stores the choice of effect command
+
 void setup()
 {
   Serial.begin(57600); // Serial used for bluetooth
@@ -142,6 +144,20 @@ void Bluetooth()
   }
 
   Serial.println(string); // Print on the Monitor latest command recieved
+
+  // Checks if a effect change command has been sent
+  if (string == "FlashEffect") // Command for Flash effect
+  {
+    EffectChoise = 1;
+  }
+  else if (string == "SpinEffect") // Command for Spin effect
+  {
+    EffectChoise = 2;
+  }
+  else if (string == "RandomEffect") //Command for Random effect
+  {
+    EffectChoise = 3;
+  }
 
   // Right LEDs
   if (string == "R1R HIGH") //Right1 Red LED
@@ -648,6 +664,19 @@ void loop()
 
     TempCheck();
   }
+  Bluetooth(); //Checks the bluetooth connection
 
-  Bluetooth();
+  // Checks which effect is choosen and runs it
+  if (EffectChoise = 1)
+  {
+    FlashingSound();
+  }
+  else if (EffectChoise = 2)
+  {
+  SpinEffect());
+  }
+  else
+  {
+    RandomEffect();
+  }
 }
