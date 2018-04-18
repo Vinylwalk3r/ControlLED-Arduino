@@ -41,7 +41,7 @@
 #define TempSensor A2 // Temperature sensor for the amplifiers
 
 #define FanRegulator 29 // Manual regulator for the fans
-#define FanSpeed A3     // connect the fans here
+#define Fan A3     // connect the fans here
 
 #define Mic A1 //Input from the microphone
 
@@ -103,7 +103,7 @@ void setup()
   pinMode(FanRegulator, INPUT);
   pinMode(Mic, INPUT);
 
-  pinMode(FanSpeed, OUTPUT);
+  pinMode(Fan, OUTPUT);
 
   //make Right & Left SB pins outputs
   for (int i = 0; i < sizeof(pins); i++)
@@ -144,6 +144,15 @@ void Bluetooth()
   }
 
   Serial.println(string); // Print on the Monitor latest command recieved
+
+  if (string.startsWith("FanSpeed"))
+  {
+    String value = string.substring(1); // Skips the # letter
+
+      value = value.substring(8); // This skips over the 8 letters of F A N S P E E D
+
+      analogWrite(Fan, value.toInt()); //Writes the fanspeed value to the analog pin
+
 
   // Checks if a effect change command has been sent
   if (string == "FlashEffect") // Command for Flash effect
@@ -287,31 +296,31 @@ void TempCheck()
 
     if (temperatureC >= 19)
     { //turns of the fans at 19 degress Celsius or below
-      analogWrite(FanSpeed, 0);
+      analogWrite(Fan, 0);
     }
     else if (temperatureC >= 20)
     { // fans at 5% at 20c or under
-      analogWrite(FanSpeed, 50);
+      analogWrite(Fan, 50);
     }
     else if (temperatureC >= 25)
     { // ~20% fanspeed at 25c
-      analogWrite(FanSpeed, 250);
+      analogWrite(Fan, 250);
     }
     else if (temperatureC >= 30)
     { // 40% fanspeed at 30c
-      analogWrite(FanSpeed, 400);
+      analogWrite(Fan, 400);
     }
     else if (temperatureC >= 35)
     { // 60% fanspeed at 35c
-      analogWrite(FanSpeed, 600);
+      analogWrite(Fan, 600);
     }
     else if (temperatureC >= 45)
     { // 80% fanspeed at 40c
-      analogWrite(FanSpeed, 800);
+      analogWrite(Fan, 800);
     }
     else if (temperatureC >= 50)
     { //fans at full speed at 50 degress Celsius
-      analogWrite(FanSpeed, 1023);
+      analogWrite(Fan, 1023);
     }
   }
 }
