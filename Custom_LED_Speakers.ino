@@ -673,7 +673,7 @@ void loop()
   }
   else if (EffectChoise = 2)
   {
-    SpinEffect());
+    SpinEffect();
   }
   else
   {
