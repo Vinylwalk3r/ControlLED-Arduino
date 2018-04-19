@@ -60,6 +60,7 @@ but please give credit where credit is due
 
 #define FanRegulator 29 // Manual regulator for the fans
 #define Fan A3          // connect the fans here
+#define RPM A4          // The pin to read fan RPM from
 
 #define Mic A1 // Input from the microphone
 
@@ -140,11 +141,13 @@ void massDigitalWrite()
 
 void SendBT()
 {
-  byte fanspeed = analogRead(Fan);
+  byte RPM = analogRead(FanRPM);
 
-  Serial.print('#'); //puts # before the values so our app knows what to do with the data
-  Serial.print(fanspeed);
-  Serial.print('~'); //used as an end of transmission character - used in app for string length
+  Serial.print('#');          // Puts # before the values so our app knows what to do with the data
+  Serial.print(RPM);          // Transimts current fan RPM
+  Serial.print(':');          // Breaks the transmission up into several commands
+  Serial.print(temperatureC); // Transmitts the current temperature in Celsius
+  Serial.print('~');          // Used as an end of transmission character - used in app for string length
   Serial.println();
 }
 
