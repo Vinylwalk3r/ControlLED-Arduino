@@ -13,6 +13,7 @@ To be used with the ControlLED app, available on Play Store
 Hope you find some good use for my work!
    Everyone is free to use my code, 
 but please give credit where credit is due
+
 */
 
 #include <SoftwareSerial.h>
@@ -137,7 +138,17 @@ void massDigitalWrite()
   }
 }
 
-void Bluetooth()
+void SendBT()
+{
+  byte fanspeed = analogRead(Fan);
+
+  Serial.print('#'); //puts # before the values so our app knows what to do with the data
+  Serial.print(fanspeed);
+  Serial.print('~'); //used as an end of transmission character - used in app for string length
+  Serial.println();
+}
+
+void ReciveBT()
 {
   // if there's a new command reset the string
   if (mySerial.available())
@@ -162,11 +173,11 @@ void Bluetooth()
 
   Serial.println(string); // Print on the Monitor latest command recieved
 
-  if (string.startsWith("FanSpeed"))
+  if (string.startsWith("#"))
   {
-    String value = string.substring(1); // Skips the # letter
+    String value = string.substring(1);
 
-    value = value.substring(8); // This skips over the 8 letters of F A N S P E E D
+    value = value.substring(8); // This skips over the 8 letters of "F A N S P E E D"
 
     analogWrite(Fan, value.toInt()); //Writes the fanspeed value to the analog pin
   }
@@ -528,7 +539,7 @@ void FlashingSound() // Flashes the LEDs in beat with the music
     }
     if (RandomColor == 2)
     {
-      digitalWrite(Greenpins[i], SoundIntensity * 15);  // Lights only green pins
+      digitalWrite(Greenpins[i], SoundIntensity * 15); // Lights only green pins
     }
     if (RandomColor == 3)
     {
@@ -544,7 +555,7 @@ void RandomEffect() // Lights the LEDs in a random sequense
   RightRandom = random(4);
   LightRandom = random(3);
 
-  massDigitalWrite(); // Turns off all LEDs
+  massDigitalWrite();                     // Turns off all LEDs
   unsigned long currentMillis = millis(); // Reads the current millis for internal clock and stores it in value "currentmillis"
 
   if ((currentMillis - previousMillis) >= interval)
@@ -689,7 +700,9 @@ void loop()
 
     TempCheck();
   }
-  Bluetooth(); // Checks the bluetooth connection
+  ReciveBT(); // Checks the bluetooth connection
+
+  SendBT(); // Sends the current fan RPM to app
 
   // Checks which effect is choosen and runs it
   if (EffectChoise = 1)

@@ -1,0 +1,49 @@
+// Sent Commands
+// This is the current rpm of the fan
+#value~
+
+
+// Recived Commands
+// End EVERY command with a ":"!!! Very Important!!!
+
+// This is to change the fanspeed. "value" is for the rpm for the fan
+#FANSPEEDvalue
+
+// The different effects
+FlashEffect
+SpinEffect
+RandomEffect
+
+// The different RGB LEDs (Right side)
+R1R HIGH
+R1G HIGH
+R1B HIGH
+
+R2R HIGH
+R2G HIGH
+R2B HIGH
+
+R3R HIGH
+R3G HIGH
+R3B HIGH
+
+R4R HIGH
+R4G HIGH
+R4B HIGH
+
+// Left side RGB LEDs
+L1R HIGH
+L1G HIGH
+L1B HIGH
+
+L2R HIGH
+L2G HIGH
+L2B HIGH
+
+L3R HIGH
+L3G HIGH
+L3B HIGH
+
+L4R HIGH
+L4G HIGH
+L4B HIGH
