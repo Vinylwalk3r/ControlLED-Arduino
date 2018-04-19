@@ -107,6 +107,8 @@ byte L4;
 
 byte EffectChoise; // Stores the choice of effect command
 
+float temperatureC; // Stores the current temp in Celsius
+
 void setup()
 {
   Serial.begin(57600); // Serial used for bluetooth
@@ -141,7 +143,7 @@ void massDigitalWrite()
 
 void SendBT()
 {
-  byte RPM = analogRead(FanRPM);
+  byte RPM = analogRead(RPM);
 
   Serial.print('#');          // Puts # before the values so our app knows what to do with the data
   Serial.print(RPM);          // Transimts current fan RPM
