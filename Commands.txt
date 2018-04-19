@@ -1,6 +1,6 @@
 // Sent Commands
-// This is the current rpm of the fan
-#value~
+// This is the current rpm of the fan and the temp
+#fanrpmvalue:temperaturevalue~
 
 
 // Recived Commands
