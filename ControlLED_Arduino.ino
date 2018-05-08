@@ -2,7 +2,7 @@
                 ControlLED - Arduino
                 Made by: Vinylwalk3r
 This code is made for the Arduino Mega or similar boards.
-To be used with the ControlLED app, available on Play Store
+(Hopefully) Will be able to control by a upcomming Windows program
             
             This program allow you to:
 ¤ Control the lights on your speakers, setting cool effects
