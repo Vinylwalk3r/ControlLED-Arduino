@@ -180,7 +180,7 @@ void ReciveBT()
 
   if (string.startsWith("#"))
   {
-    String value = string.substring(1);
+    String value = string.substring(1); // Skips over the #
 
     value = value.substring(8); // This skips over the 8 letters of "F A N S P E E D"
 
