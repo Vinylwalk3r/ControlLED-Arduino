@@ -355,7 +355,7 @@ void TempCheck()
       analogWrite(Fan, 1023);
     }
   }
-  else if (manualFanSpeed = < 1)
+  else if (manualFanSpeed >= 1)
   {
     analogWrite(Fan, manualFanSpeed);
   }
