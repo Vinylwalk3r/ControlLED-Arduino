@@ -109,6 +109,8 @@ byte EffectChoise; // Stores the choice of effect command
 
 byte temperatureC; // Stores the current temp in Celsius
 
+char state;
+
 void setup()
 {
   Serial.begin(57600); // Serial used for bluetooth
@@ -137,7 +139,7 @@ void massDigitalWrite()
 {
   for (int i = 0; i < sizeof(pins); i++)
   {
-    digitalWrite(pins[i], LOW); // Turns off all LEDs
+    digitalWrite(pins[i], state); // Turns off all LEDs
   }
 }
 
@@ -563,6 +565,7 @@ void RandomEffect() // Lights the LEDs in a random sequense
   RightRandom = random(4);
   LightRandom = random(3);
 
+  state = LOW;
   massDigitalWrite();                     // Turns off all LEDs
   unsigned long currentMillis = millis(); // Reads the current millis for internal clock and stores it in value "currentmillis"
 
