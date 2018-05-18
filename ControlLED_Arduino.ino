@@ -107,7 +107,7 @@ byte L4;
 
 byte EffectChoise; // Stores the choice of effect command
 
-float temperatureC; // Stores the current temp in Celsius
+byte temperatureC; // Stores the current temp in Celsius
 
 void setup()
 {
@@ -311,7 +311,6 @@ void ReciveBT()
 void TempCheck()
 {
   // Call this to check the temps and control the fans,
-  // Comment this part out if you dont have a temp sensor - fan control setup.
 
   // Checks if the manual override regulator has been used. If not, this code runs (automatic fan control)
   manualFanSpeed = analogRead(FanRegulator); // Reads the setting of the fan regulator and stores it in manualFanSpeed
@@ -325,7 +324,7 @@ void TempCheck()
     voltage /= 1024.0;
 
     // Converting from 10 mv per degree wit 500 mV offset to degrees ((volatge - 500mV) times 100)
-    float temperatureC = (voltage - 0.5) * 100;
+    temperatureC = (voltage - 0.5) * 100;
 
     if (temperatureC >= 19)
     { // Turns of the fans at 19 degress Celsius or below
@@ -355,6 +354,10 @@ void TempCheck()
     { // Fans at full speed at 50 degress Celsius
       analogWrite(Fan, 1023);
     }
+  }
+  else if (manualFanSpeed = < 1)
+  {
+    analogWrite(Fan, manualFanSpeed);
   }
 }
 
@@ -698,7 +701,7 @@ void loop()
 {
   unsigned long currentMillis = millis();
 
-  if (currentMillis - previousMillis >= interval)
+  if (currentMillis - previousMillis >= interval) // Comment this part out if you dont have a temp sensor - fan control setup.
   {
     // Save the last time the code ran
     previousMillis = currentMillis;
