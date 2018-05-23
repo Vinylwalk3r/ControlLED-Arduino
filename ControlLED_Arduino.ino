@@ -86,7 +86,7 @@ unsigned long previousMillis = 0; // time since last run of the code
 // constants won't change:
 const long interval = 1000; // interval at which to do TempCheck (milliseconds)
 
-String string;
+String commandString;
 char command;
 
 byte pins[] = {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26}; // the pins to of the LEDs
@@ -107,7 +107,13 @@ byte L4;
 
 byte EffectChoise; // Stores the choice of effect command
 
-byte temperatureC; // Stores the current temp in Celsius
+enum EffectStates
+{
+  Flash,
+  Spin,
+  Random
+};
+EffectStates currentEffectState;
 
 char state;
 
@@ -157,13 +163,13 @@ void SendBT()
 
 void ReciveBT()
 {
-  // if there's a new command reset the string
+  // if there's a new command reset the commandString
   if (mySerial.available())
   {
-    string = "";
+    commandString = "";
   }
 
-  // Construct the command string fetching the bytes, sent by Android, one by one.
+  // Construct the command commandString fetching the bytes, sent by Android, one by one.
   while (mySerial.available())
   {
     command = ((byte)mySerial.read()); // Reads the serial port and adds the data to the byte "command"
@@ -174,137 +180,144 @@ void ReciveBT()
     }
     else
     {
-      string += command; // Puts the recived commands into string
+      commandString += command; // Puts the recived commands into commandString
     }
   }
 
-  Serial.println(string); // Print on the Monitor latest command recieved
+  Serial.println(commandString); // Print on the Monitor latest command recieved
 
-  if (string.startsWith("#"))
+  if (commandString.startsWith("#"))
   {
-    String value = string.substring(1); // Skips over the #
+    String public value = commandString.substring(1); // Skips over the #
 
     value = value.substring(8); // This skips over the 8 letters of "F A N S P E E D"
-
-    analogWrite(Fan, value.toInt()); //Writes the fanspeed value to the analog pin
   }
 
-  // Checks if a effect change command has been sent
-  if (string == "FlashEffect") // Command for Flash effect
+  if (commandString.startsWith('1'))
+
+    /* switch (currentEffectState)
   {
-    EffectChoise = 1;
+  case Flash:
+    break;
   }
-  else if (string == "SpinEffect") // Command for Spin effect
-  {
-    EffectChoise = 2;
-  }
-  else if (string == "RandomEffect") // Command for Random effect
-  {
-    EffectChoise = 3;
-  }
+*/
+
+    // Checks if a effect change command has been sent
+    if (commandString == "FlashEffect") // Command for Flash effect
+    {
+      EffectChoise = 1;
+    }
+    else if (commandString == "SpinEffect") // Command for Spin effect
+    {
+      EffectChoise = 2;
+    }
+    else if (commandString == "RandomEffect") // Command for Random effect
+    {
+      EffectChoise = 3;
+    }
 
   // Right LEDs
-  if (string == "R1R HIGH") // Right1 Red LED
+  if (commandString == "R1R HIGH") // Right1 Red LED
   {
     R1 = 0; // 0 = Red
   }
-  else if (string == "R1G HIGH")
+  else if (commandString == "R1G HIGH")
   {
     R1 = 127; // 127 = Green
   }
-  else if (string == "R1B HIGH")
+  else if (commandString == "R1B HIGH")
   {
     R1 = 255; // 255 = Blue
   }
 
-  if (string == "R2R HIGH")
+  if (commandString == "R2R HIGH")
   {
     R2 = 0;
   }
-  else if (string == "R2G HIGH")
+  else if (commandString == "R2G HIGH")
   {
     R2 = 127;
   }
-  else if (string == "R2B HIGH")
+  else if (commandString == "R2B HIGH")
   {
     R2 = 255;
   }
 
-  if (string == "R3R HIGH")
+  if (commandString == "R3R HIGH")
   {
     R3 = 0;
   }
-  else if (string == "R3G HIGH")
+  else if (commandString == "R3G HIGH")
   {
     R3 = 127;
   }
-  else if (string == "R3B HIGH")
+  else if (commandString == "R3B HIGH")
   {
     R3 = 255;
   }
 
-  if (string == "R4R HIGH")
+  if (commandString == "R4R HIGH")
   {
     R4 = 0;
   }
-  else if (string == "R4G HIGH")
+  else if (commandString == "R4G HIGH")
   {
     R4 = 127;
   }
-  else if (string == "R4B HIGH")
+  else if (commandString == "R4B HIGH")
   {
     R4 = 255;
   }
 
   // Left LEDs
-  if (string == "L1R HIGH")
+  if (commandString == "L1R HIGH")
   {
     L1 = 0;
   }
-  else if (string == "L1G HIGH")
+  else if (commandString == "L1G HIGH")
   {
     L1 = 127;
   }
-  else if (string == "L1B HIGH")
+  else if (commandString == "L1B HIGH")
   {
     L1 = 255;
   }
 
-  if (string == "L2R HIGH")
+  if (commandString == "L2R HIGH")
   {
     L2 = 0;
   }
-  else if (string == "L2G HIGH")
+  else if (commandString == "L2G HIGH")
   {
     L2 = 127;
   }
-  else if (string == "L2B HIGH")
+  else if (commandString == "L2B HIGH")
   {
     L2 = 255;
   }
 
-  if (string == "L3R HIGH")
+  if (commandString == "L3R HIGH")
   {
     L3 = 0;
   }
-  else if (string == "L3G HIGH")
+  else if (commandString == "L3G HIGH")
   {
     L3 = 127;
   }
-  else if (string == "L3B HIGH")
+  else if (commandString == "L3B HIGH")
   {
     L3 = 255;
   }
 
-  if (string == "R4R HIGH")
+  if (commandString == "R4R HIGH")
   {
     L4 = 0;
   }
-  else if (string == "R4G HIGH")
+  else if (commandString == "R4G HIGH")
   {
     L4 = 127;
   }
-  else if (string == "R4B HIGH")
+  else if (commandString == "R4B HIGH")
   {
     L4 = 255;
   }
@@ -312,54 +325,69 @@ void ReciveBT()
 
 void TempCheck()
 {
-  // Call this to check the temps and control the fans,
+  // Call this to check the temp sensor and compute to Celsuis
+  currentTemp = analogRead(TempSensor); // Values range from 0 -1023
+
+  // Converting that reading to voltage, which is based off the reference voltage
+  float voltage = currentTemp * aref_voltage;
+  voltage /= 1024.0;
+
+  // Converting from 10 mv per degree wit 500 mV offset to degrees ((volatge - 500mV) times 100)
+  byte public temperatureC = (voltage - 0.5) * 100;
+}
+
+void FanControl()
+{
+  // Call this to control the fans,
 
   // Checks if the manual override regulator has been used. If not, this code runs (automatic fan control)
   manualFanSpeed = analogRead(FanRegulator); // Reads the setting of the fan regulator and stores it in manualFanSpeed
 
-  if (manualFanSpeed = 0)
+  if (manualFanSpeed = 0, value = 0)
   {
-    currentTemp = analogRead(TempSensor); // Values range from 0 -1023
-
-    // Converting that reading to voltage, which is based off the reference voltage
-    float voltage = currentTemp * aref_voltage;
-    voltage /= 1024.0;
-
-    // Converting from 10 mv per degree wit 500 mV offset to degrees ((volatge - 500mV) times 100)
-    temperatureC = (voltage - 0.5) * 100;
-
     if (temperatureC >= 19)
-    { // Turns of the fans at 19 degress Celsius or below
+    { // Turns off the fans at 19 degress Celsius or below
       analogWrite(Fan, 0);
+      break;
     }
     else if (temperatureC >= 20)
     { // Fans at 5% at 20c or under
       analogWrite(Fan, 50);
+      break;
     }
     else if (temperatureC >= 25)
     { // ~20% fanspeed at 25c
       analogWrite(Fan, 250);
+      break;
     }
     else if (temperatureC >= 30)
     { // 40% fanspeed at 30c
       analogWrite(Fan, 400);
+      break;
     }
     else if (temperatureC >= 35)
     { // 60% fanspeed at 35c
       analogWrite(Fan, 600);
+      break;
     }
     else if (temperatureC >= 45)
     { // 80% fanspeed at 40c
       analogWrite(Fan, 800);
+      break;
     }
     else if (temperatureC >= 50)
     { // Fans at full speed at 50 degress Celsius
       analogWrite(Fan, 1023);
+      break;
     }
   }
-  else if (manualFanSpeed >= 1)
+  else if (manualFanSpeed >= 1, value = 0)
   {
     analogWrite(Fan, manualFanSpeed);
+  }
+  else
+  {
+    analogWrite(Fan, value.toInt()); //Writes the fanspeed value from the Android to the analog pin
   }
 }
 
