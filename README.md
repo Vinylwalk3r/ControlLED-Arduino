@@ -21,7 +21,7 @@ The effects are hardcoded into the arduino, and are the following: Spin, Flash t
 
 Below is a example of how it's going to look when finished. All the white boxes are components located under the floor.
 
-[Sorry, this image cant be viewed :/ ](https://github.com/Vinylwalk3r/ControlLED-Arduino//blob/master/image/ControlLED_Example_Setup.jpg?raw=true "Title")
+[Sorry, this image cant be viewed :/ ](https://github.com/Vinylwalk3r/ControlLED-Arduino/blob/master/image/ControlLED_Example_Setup.jpg?raw=true "Title")
 
 ![Sorry, this image cant be viewed :/ ](https://github.com/Vinylwalk3r/Doorbell_Control_Unit/blob/master/Schematic.jpg?raw=true "Title")
 
