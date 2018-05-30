@@ -150,7 +150,6 @@ enum LEDstates
   L4B,
 };
 
-
 void setup()
 {
   Serial.begin(57600); // Serial used for bluetooth
