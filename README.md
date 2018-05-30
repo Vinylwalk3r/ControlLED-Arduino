@@ -1,16 +1,24 @@
 # ControlLED (Arduino Part)
 
-This is a WIP (Work in Progress). Im updating as im going along. also, nothing is tested yet, so if you would make something like this, and use my code, I dont promis anything at the moment. Until the testing rig is finished, I'll just say, this is WIP and anything and nothing can work!
+!!!This is a WIP (Work in Progress). Im updating as im going along. also, nothing is tested yet, so if you would make something like this, and use my code, I dont promis anything at the moment. Until the testing rig is finished, I'll just say, this is WIP and anything and nothing can work!
 
 If you want to have custom DIY lighting in your speakers, controlled by an Arduino, this project might be worth a look. This code will allow you to control your speaker RGB LEDs over Bluetooth, and get some nice effect for them.
 
+
 Features
 
-¤ Multiple effects, for now:
-Spin, Random and Flash-to-music
+¤ Individually select different LED colors
+¤ Multiple effects to choose from
+¤ Switching between effects via both bluetooth and manual
+¤ Manual control over the fans
+¤ Fans controlled by temperature readings
+¤ Autoswitching between manual / auto
 
-¤ Switching between effects
+The Fans are controlled via PWM. 
 
-¤ Support for manual control over fans, and autoswitching between manual / auto (PWM)
+The effects are hardcoded into the arduino, and are the following: Spin, Flash to music, and Random
 
-¤ In auto, fans are controlled by temperature. Manual is manual.
+
+Below is a example of how it's going to look when finished. All the white boxes are components located under the floor.
+![Sorry, this image cant be viewed :/ ](https://github.com/Vinylwalk3r/ControlLED-Arduino/tree/master/image/ControlLED_Example_Setup.png?raw=true "Title")
+ A more detailed diagram of how to wire this thing up will come when it is released.
