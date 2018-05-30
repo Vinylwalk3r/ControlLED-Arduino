@@ -21,6 +21,6 @@ The effects are hardcoded into the arduino, and are the following: Spin, Flash t
 
 Below is a example of how it's going to look when finished. All the white boxes are components located under the floor.
 
-[Sorry, this image cant be viewed :/ ](https://github.com/Vinylwalk3r/ControlLED-Arduino/image/ControlLEDExampleSetup.jpg?raw=true "Title")
+[Sorry, this image cant be viewed :/ ](https://github.com/Vinylwalk3r/ControlLED-Arduino/tree/master/image/ControlLEDExampleSetup.jpg?raw=true "Title")
 
  A more detailed diagram of how to wire this thing up will come when it is released.
