@@ -309,6 +309,7 @@ void ReciveBT()
       R4 = 0;
       break;
     }
+    case R4G:
     {
       R4 = 1;
       break;
@@ -383,18 +384,10 @@ void ReciveBT()
       break;
     }
     }
-  else if (commandString == "R1B HIGH")
-  {
     R1 = 255; // 255 = Blue
   }
-
-  if (commandString == "R2R HIGH")
-  {
-    R2 = 0;
-  }
-  else if (commandString == "R2G HIGH")
-  }
 }
+
 void TempCheck()
 {
   // Call this to check the temp sensor and compute to Celsuis
