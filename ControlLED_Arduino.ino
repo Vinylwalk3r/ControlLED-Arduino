@@ -74,7 +74,7 @@ byte buttonState = 0;       // Current state of the button
 byte lastButtonState = 0;   // Previous state of the button
 
 // Variables for the temp sensor and fans
-int temperatureC;    // Stores the current temperature
+int temperatureC;   // Stores the current temperature
 int manualFanSpeed; // Holds the reading from the fanregulator
 String value;
 
@@ -95,7 +95,7 @@ byte redpins[] = {3, 6, 9, 12, 15, 18, 21, 24};                                 
 byte greenpins[] = {4, 7, 10, 13, 16, 19, 22, 25};                                                       // Green pins
 byte bluepins[] = {5, 8, 11, 14, 17, 20, 23, 26};                                                        // Blue pins
 
-// A byte value which will be either 0, 127 or 255 depending
+// A byte value which will be either 0, 1 or 2 depending
 // on if Red, Green o Blue LED should light up
 byte R1;
 byte R2;
@@ -106,12 +106,12 @@ byte L2;
 byte L3;
 byte L4;
 
-byte userFanSpeed;
+byte appFanSpeed;
 
 enum effectStates
 {
-  flash,
-  spin,
+  Flash,
+  Spin,
   Random,
 };
 enum LEDstates
@@ -209,6 +209,7 @@ void ReciveBT()
 
     if (command == ':') // Stops if a ":" is encounted
     {
+      break;
     }
     else
     {
@@ -216,83 +217,172 @@ void ReciveBT()
     }
   }
 
-  Serial.println(commandString); // Print on the Monitor latest command recieved
+  Serial.println(commandString); // Print on the Monitor latest command recived
 
   if (commandString.startsWith("#"))
   {
     String value = commandString.substring(1); // Skips over the #
 
-    userFanSpeed = value.substring(8); // This skips over the 8 letters of "F A N S P E E D"
+    appFanSpeed = value.substring(8); // This skips over the 8 letters of "F A N S P E E D"
   }
 
-  if (commandString.startsWith("@")) 
+  if (commandString.startsWith("@"))
   {
-// Checks which effect was choosen
-    switch (commandString) {
+
+    int commands;
+    commandString += commands;
+
+    // Checks which effect was choosen
+    switch (commands)
     {
-    case Flash:
+
+    case Flash: //recived number = 0
     {
       FlashingSound();
-
-      
+      break;
     }
-    break;
-    case Spin:
+
+    case Spin: // 1
     {
       SpinEffect();
-      
+      break;
     }
-    break;
-    case Random:
+
+    case Random: // 2
     {
       RandomEffect();
-      
-    }
-    break;
-    }
-  else {
-// Checks which effect was choosen
-    switch (commandString)
-    {
-    case Flash:
-    {
-      FlashingSound();
-
-    }
-    case Spin:
-    {
-      SpinEffect();
-    }
-    case Raindom:
-    {
-      RandomEffect();
-    }
+      break;
     }
 
- /* 
-    // Checks if a effect change command has been sent
-    if (commandString == "FlashEffect") // Command for Flash effect
+      // If the above is not found, then check if light command is recived
+      // Right1 LED
+    case R1R:
     {
-      EffectChoise = 1;
+      R1 = 0; // 0 = Red
+      break;
     }
-    else if (commandString == "SpinEffect") // Command for Spin effect
+    case R1G:
     {
-      EffectChoise = 2;
+      R1 = 1;
+      break;
     }
-    else if (commandString == "RandomEffect") // Command for Random effect
+    case R1B:
     {
-      EffectChoise = 3;
+      R1 = 2;
+      break;
     }
-
-  // Right LEDs
-  if (commandString == "R1R HIGH") // Right1 Red LED
-  {
-    R1 = 0; // 0 = Red
-  }
-  else if (commandString == "R1G HIGH")
-  {
-    R1 = 127; // 127 = Green
-  }
+      // Right2 LED
+    case R2R:
+    {
+      R2 = 0;
+      break;
+    }
+    case R2G:
+    {
+      R2 = 1;
+      break;
+    }
+    case R2B:
+    {
+      R2 = 2;
+      break;
+    }
+      // Right3 LED
+    case R3R:
+    {
+      R3 = 0;
+      break;
+    }
+    case R3G:
+    {
+      R3 = 1;
+      break;
+    }
+    case R3B:
+    {
+      R3 = 2;
+      break;
+    }
+      // Right4 LED
+    case R4R:
+    {
+      R4 = 0;
+      break;
+    }
+    {
+      R4 = 1;
+      break;
+    }
+    case R4B:
+    {
+      R4 = 2;
+      break;
+    }
+      // Left1 LED
+    case L1R:
+    {
+      L1 = 0;
+      break;
+    }
+    case L1G:
+    {
+      L1 = 1;
+      break;
+    }
+    case L1B:
+    {
+      L1 = 2;
+      break;
+    }
+      // Left2 LED
+    case L2R:
+    {
+      L2 = 0;
+      break;
+    }
+    case L2G:
+    {
+      L2 = 1;
+      break;
+    }
+    case L2B:
+    {
+      L2 = 2;
+      break;
+    }
+      // Left3 LED
+    case L3R:
+    {
+      L3 = 0;
+      break;
+    }
+    case L3G:
+    {
+      L3 = 1;
+      break;
+    }
+    case L3B:
+    {
+      L3 = 2;
+      break;
+    }
+      // Left4 LED
+    case L4R:
+    {
+      L4 = 0;
+      break;
+    }
+    case L4G:
+    {
+      L4 = 1;
+      break;
+    }
+    case L4B:
+    {
+      L4 = 2;
+      break;
+    }
+    }
   else if (commandString == "R1B HIGH")
   {
     R1 = 255; // 255 = Blue
@@ -303,94 +393,8 @@ void ReciveBT()
     R2 = 0;
   }
   else if (commandString == "R2G HIGH")
-  {
-    R2 = 127;
   }
-  else if (commandString == "R2B HIGH")
-  {
-    R2 = 255;
-  }
-
-  if (commandString == "R3R HIGH")
-  {
-    R3 = 0;
-  }
-  else if (commandString == "R3G HIGH")
-  {
-    R3 = 127;
-  }
-  else if (commandString == "R3B HIGH")
-  {
-    R3 = 255;
-  }
-
-  if (commandString == "R4R HIGH")
-  {
-    R4 = 0;
-  }
-  else if (commandString == "R4G HIGH")
-  {
-    R4 = 127;
-  }
-  else if (commandString == "R4B HIGH")
-  {
-    R4 = 255;
-  }
-
-  // Left LEDs
-  if (commandString == "L1R HIGH")
-  {
-    L1 = 0;
-  }
-  else if (commandString == "L1G HIGH")
-  {
-    L1 = 127;
-  }
-  else if (commandString == "L1B HIGH")
-  {
-    L1 = 255;
-  }
-
-  if (commandString == "L2R HIGH")
-  {
-    L2 = 0;
-  }
-  else if (commandString == "L2G HIGH")
-  {
-    L2 = 127;
-  }
-  else if (commandString == "L2B HIGH")
-  {
-    L2 = 255;
-  }
-
-  if (commandString == "L3R HIGH")
-  {
-    L3 = 0;
-  }
-  else if (commandString == "L3G HIGH")
-  {
-    L3 = 127;
-  }
-  else if (commandString == "L3B HIGH")
-  {
-    L3 = 255;
-  }
-
-  if (commandString == "R4R HIGH")
-  {
-    L4 = 0;
-  }
-  else if (commandString == "R4G HIGH")
-  {
-    L4 = 127;
-  }
-  else if (commandString == "R4B HIGH")
-  {
-    L4 = 255;
-  }   */
 }
-
 void TempCheck()
 {
   // Call this to check the temp sensor and compute to Celsuis
@@ -448,7 +452,7 @@ void FanControl()
   }
   else
   {
-    analogWrite(Fan, userFanSpeed); //Writes the fanspeed value from the Android to the analog pin         value.toInt()
+    analogWrite(Fan, appFanSpeed); //Writes the fanspeed value from the Android to the analog pin
   }
 }
 
@@ -458,7 +462,7 @@ void SpinEffect() // Creates a infinte loopable spin effect
   {
     digitalWrite(Right4R, HIGH);
   }
-  else if (R4 = 127)
+  else if (R4 = 1)
   {
     digitalWrite(Right4G, HIGH);
   }
@@ -471,7 +475,7 @@ void SpinEffect() // Creates a infinte loopable spin effect
   {
     digitalWrite(Left4R, HIGH);
   }
-  else if (L4 = 127)
+  else if (L4 = 1)
   {
     digitalWrite(Left4G, HIGH);
   }
@@ -491,7 +495,7 @@ void SpinEffect() // Creates a infinte loopable spin effect
   {
     digitalWrite(Right1R, HIGH);
   }
-  else if (R4 = 127)
+  else if (R4 = 1)
   {
     digitalWrite(Right1G, HIGH);
   }
@@ -504,7 +508,7 @@ void SpinEffect() // Creates a infinte loopable spin effect
   {
     digitalWrite(Left1R, HIGH);
   }
-  else if (L1 = 127)
+  else if (L1 = 1)
   {
     digitalWrite(Left1G, HIGH);
   }
@@ -525,7 +529,7 @@ void SpinEffect() // Creates a infinte loopable spin effect
   {
     digitalWrite(Right2R, HIGH);
   }
-  else if (R2 = 127)
+  else if (R2 = 1)
   {
     digitalWrite(Right2G, HIGH);
   }
@@ -538,7 +542,7 @@ void SpinEffect() // Creates a infinte loopable spin effect
   {
     digitalWrite(Left2R, HIGH);
   }
-  else if (L2 = 127)
+  else if (L2 = 1)
   {
     digitalWrite(Left2G, HIGH);
   }
@@ -558,7 +562,7 @@ void SpinEffect() // Creates a infinte loopable spin effect
   {
     digitalWrite(Right3R, HIGH);
   }
-  else if (R3 = 127)
+  else if (R3 = 1)
   {
     digitalWrite(Right3G, HIGH);
   }
@@ -571,7 +575,7 @@ void SpinEffect() // Creates a infinte loopable spin effect
   {
     digitalWrite(Left3R, HIGH);
   }
-  else if (L3 = 127)
+  else if (L3 = 1)
   {
     digitalWrite(Left3G, HIGH);
   }
@@ -591,7 +595,7 @@ void SpinEffect() // Creates a infinte loopable spin effect
   {
     digitalWrite(Right4R, HIGH);
   }
-  else if (R4 = 127)
+  else if (R4 = 1)
   {
     digitalWrite(Right4G, HIGH);
   }
@@ -603,7 +607,7 @@ void SpinEffect() // Creates a infinte loopable spin effect
   {
     digitalWrite(Left4R, HIGH);
   }
-  else if (L4 = 127)
+  else if (L4 = 1)
   {
     digitalWrite(Left4G, HIGH);
   }
@@ -803,7 +807,7 @@ void loop()
 
   SendBT(); // Sends the current fan RPM to app
 
- /* // Checks which effect is choosen and runs it
+  /* // Checks which effect is choosen and runs it
   if (EffectChoise = 1)
   {
     FlashingSound();

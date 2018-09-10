@@ -15,12 +15,13 @@ If you want to have custom DIY lighting in your speakers, controlled by an Ardui
 
 ## Features
 
-- Individually select different LED colors
 - Multiple effects to choose from
-- Switching between effects via both bluetooth and manual
-- Manual control over the fans
 - Fans controlled by temperature readings
-- Autoswitching between manual / auto
+- Manual control over the fans
+- Autoswitching between manual / auto fan control
+### Bluetooth Required
+- Individually select different LED colors
+- Switching between effects via either bluetooth or manual
 
 The Fans are controlled via PWM. 
 
@@ -29,6 +30,9 @@ The effects are hardcoded into the arduino, and are the following
 - Spin
 - Flash to music
 - Random
+
+Want more? Request at johannesw4@gmail.com
+
 
 ## Example
 Below is a example of how it's going to look when finished. All the white boxes are components located under the floor.
