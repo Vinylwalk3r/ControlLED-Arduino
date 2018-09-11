@@ -3,14 +3,14 @@
 ### !!!This is a WIP (Work in Progress). 
 Im updating as im going along. also, nothing is tested yet, so if you would make something like this, and use my code, I dont promis anything at the moment. Until the testing rig is finished, I'll just say, this is WIP and anything and nothing can work!
 
-- [Introduction](#what-is-it?)
+- [What is This?](#what-is-this?)
 - [Features](#features)
 - [Effects List](#effects)
 - [Latest Update](#latest-update)
 - [Example](#example)
 
 
-## What Is It?
+## What Is This?
 If you want to have custom DIY lighting in your speakers, controlled by an Arduino, this project might be worth a look. This code will allow you to control your speaker RGB LEDs over Bluetooth, and get some nice effect for them.
 
 
