@@ -36,7 +36,7 @@ Got an idea for a new effect, or have a question? Just ask me at johannesw4@gmai
 
 ## Latest Update
 
-### 07-110918
+#### [07-110918](https://github.com/Vinylwalk3r/ControlLED-Arduino/blob/master/changelog.md#07-110918)
 
 Added
 
@@ -52,8 +52,6 @@ Changed
 - Changing if's to switch cases
 - Fixed minor issues
 - Cleaned code
-
-#### [Changelog](https://github.com/Vinylwalk3r/ControlLED-Arduino/blob/master/changelog.md#05-180418)
 
 ## Example
 Below is a example of how it's going to look when finished. All the white boxes are components located under the floor.
