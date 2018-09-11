@@ -53,7 +53,7 @@ Changed
 - Fixed minor issues
 - Cleaned code
 
-#### [Changelog](https://github.com/Vinylwalk3r/ControlLED-Arduino/blob/master/changelog.md)
+#### [Changelog](https://github.com/Vinylwalk3r/ControlLED-Arduino/blob/master/changelog.m#05-180418)
 
 ## Example
 Below is a example of how it's going to look when finished. All the white boxes are components located under the floor.
