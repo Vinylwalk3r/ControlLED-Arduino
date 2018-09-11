@@ -3,14 +3,14 @@
 ### !!!This is a WIP (Work in Progress). 
 Im updating as im going along. also, nothing is tested yet, so if you would make something like this, and use my code, I dont promis anything at the moment. Until the testing rig is finished, I'll just say, this is WIP and anything and nothing can work!
 
-- [Introduction](#whatisit?)
+- [Introduction](#what-is-it?)
 - [Features](#features)
 - [Effects List](#effects)
-- [Latest Update](#latestupdate)
+- [Latest Update](#latest-update)
 - [Example](#example)
 
 
-## What is It?
+## What Is It?
 If you want to have custom DIY lighting in your speakers, controlled by an Arduino, this project might be worth a look. This code will allow you to control your speaker RGB LEDs over Bluetooth, and get some nice effect for them.
 
 
@@ -53,7 +53,7 @@ Changed
 - Fixed minor issues
 - Cleaned code
 
-[Changelog](https://github.com/Vinylwalk3r/ControlLED-Arduino/blob/master/changelog.md)
+#### [Changelog](https://github.com/Vinylwalk3r/ControlLED-Arduino/blob/master/changelog.md)
 
 ## Example
 Below is a example of how it's going to look when finished. All the white boxes are components located under the floor.
