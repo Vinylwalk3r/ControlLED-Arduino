@@ -5,7 +5,8 @@ Im updating as im going along. also, nothing is tested yet, so if you would make
 
 - [Introduction](#whatisit?)
 - [Features](#features)
-- [Effects](#effects)
+- [Effects List](#effects)
+- [Latest Update](#latestupdate)
 - [Example](#example)
 
 
@@ -31,8 +32,28 @@ The effects are hardcoded into the arduino, and are the following
 - Flash to music
 - Random
 
-Want more? Request at johannesw4@gmail.com
+Got an idea for a new effect, or have a question? Just ask me at johannesw4@gmail.com
 
+## Latest Update
+
+### 07-110918
+
+Added
+
+- This Changelog
+- Table of content and updated readme A LOT
+
+Changed
+
+- Changed RGB selection from 0 (Red), 127 (Green) and 256 (Blue) to 0,1,2 (Red, Green, Blue)
+- Changed if's to switch cases in light and effect selection
+- Reorganized Everything
+- Changed many bytes names to complete lowercase names
+- Changing if's to switch cases
+- Fixed minor issues
+- Cleaned code
+
+[Changelog](https://github.com/Vinylwalk3r/ControlLED-Arduino/blob/master/changelog.md)
 
 ## Example
 Below is a example of how it's going to look when finished. All the white boxes are components located under the floor.

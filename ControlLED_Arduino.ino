@@ -150,6 +150,7 @@ enum LEDstates
   L4B,
 };
 
+
 void setup()
 {
   Serial.begin(57600); // Serial used for bluetooth
@@ -254,7 +255,7 @@ void ReciveBT()
       break;
     }
 
-      // If the above is not found, then check if light command is recived
+      // If no effect command was recived, then check if light command is recived
       // Right1 LED
     case R1R:
     {
@@ -384,7 +385,6 @@ void ReciveBT()
       break;
     }
     }
-    R1 = 255; // 255 = Blue
   }
 }
 
