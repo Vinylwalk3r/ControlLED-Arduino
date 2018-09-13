@@ -2,7 +2,7 @@
                 ControlLED - Arduino
                 Made by: Vinylwalk3r
 This code is made for the Arduino Mega or similar boards.
-(Hopefully) Will be able to control by a upcomming Windows program
+(Hopefully) Will be able to control by a upcomming Windows program or Android App
             
             This program allow you to:
 ¤ Control the lights on your speakers, setting cool effects
@@ -13,7 +13,6 @@ This code is made for the Arduino Mega or similar boards.
 Hope you find some good use for my work!
    Everyone is free to use my code, 
 but please give credit where credit is due
-
 */
 
 #include <SoftwareSerial.h>
@@ -106,7 +105,7 @@ byte L2;
 byte L3;
 byte L4;
 
-byte appFanSpeed;
+int appFanSpeed;
 
 enum effectStates
 {
@@ -149,7 +148,6 @@ enum LEDstates
   L4G,
   L4B,
 };
-
 
 void setup()
 {
@@ -224,7 +222,11 @@ void ReciveBT()
   {
     String value = commandString.substring(1); // Skips over the #
 
-    appFanSpeed = value.substring(8); // This skips over the 8 letters of "F A N S P E E D"
+    String appFanSpeedString; //Creates a temporary string
+
+    appFanSpeedString = value.substring(8); // This skips over the 8 letters of "F A N S P E E D"
+
+    appFanSpeedString = appFanSpeed; //Gives its recived value to the int
   }
 
   if (commandString.startsWith("@"))
@@ -254,136 +256,138 @@ void ReciveBT()
       RandomEffect();
       break;
     }
-
-      // If no effect command was recived, then check if light command is recived
-      // Right1 LED
-    case R1R:
-    {
-      R1 = 0; // 0 = Red
-      break;
-    }
-    case R1G:
-    {
-      R1 = 1;
-      break;
-    }
-    case R1B:
-    {
-      R1 = 2;
-      break;
-    }
-      // Right2 LED
-    case R2R:
-    {
-      R2 = 0;
-      break;
-    }
-    case R2G:
-    {
-      R2 = 1;
-      break;
-    }
-    case R2B:
-    {
-      R2 = 2;
-      break;
-    }
-      // Right3 LED
-    case R3R:
-    {
-      R3 = 0;
-      break;
-    }
-    case R3G:
-    {
-      R3 = 1;
-      break;
-    }
-    case R3B:
-    {
-      R3 = 2;
-      break;
-    }
-      // Right4 LED
-    case R4R:
-    {
-      R4 = 0;
-      break;
-    }
-    case R4G:
-    {
-      R4 = 1;
-      break;
-    }
-    case R4B:
-    {
-      R4 = 2;
-      break;
-    }
-      // Left1 LED
-    case L1R:
-    {
-      L1 = 0;
-      break;
-    }
-    case L1G:
-    {
-      L1 = 1;
-      break;
-    }
-    case L1B:
-    {
-      L1 = 2;
-      break;
-    }
-      // Left2 LED
-    case L2R:
-    {
-      L2 = 0;
-      break;
-    }
-    case L2G:
-    {
-      L2 = 1;
-      break;
-    }
-    case L2B:
-    {
-      L2 = 2;
-      break;
-    }
-      // Left3 LED
-    case L3R:
-    {
-      L3 = 0;
-      break;
-    }
-    case L3G:
-    {
-      L3 = 1;
-      break;
-    }
-    case L3B:
-    {
-      L3 = 2;
-      break;
-    }
-      // Left4 LED
-    case L4R:
-    {
-      L4 = 0;
-      break;
-    }
-    case L4G:
-    {
-      L4 = 1;
-      break;
-    }
-    case L4B:
-    {
-      L4 = 2;
-      break;
-    }
+      switch (commands)
+      {
+        // If no effect command was recived, then check if light command is recived
+        // Right1 LED
+      case R1R:
+      {
+        R1 = 0; // 0 = Red
+        break;
+      }
+      case R1G:
+      {
+        R1 = 1;
+        break;
+      }
+      case R1B:
+      {
+        R1 = 2;
+        break;
+      }
+        // Right2 LED
+      case R2R:
+      {
+        R2 = 0;
+        break;
+      }
+      case R2G:
+      {
+        R2 = 1;
+        break;
+      }
+      case R2B:
+      {
+        R2 = 2;
+        break;
+      }
+        // Right3 LED
+      case R3R:
+      {
+        R3 = 0;
+        break;
+      }
+      case R3G:
+      {
+        R3 = 1;
+        break;
+      }
+      case R3B:
+      {
+        R3 = 2;
+        break;
+      }
+        // Right4 LED
+      case R4R:
+      {
+        R4 = 0;
+        break;
+      }
+      case R4G:
+      {
+        R4 = 1;
+        break;
+      }
+      case R4B:
+      {
+        R4 = 2;
+        break;
+      }
+        // Left1 LED
+      case L1R:
+      {
+        L1 = 0;
+        break;
+      }
+      case L1G:
+      {
+        L1 = 1;
+        break;
+      }
+      case L1B:
+      {
+        L1 = 2;
+        break;
+      }
+        // Left2 LED
+      case L2R:
+      {
+        L2 = 0;
+        break;
+      }
+      case L2G:
+      {
+        L2 = 1;
+        break;
+      }
+      case L2B:
+      {
+        L2 = 2;
+        break;
+      }
+        // Left3 LED
+      case L3R:
+      {
+        L3 = 0;
+        break;
+      }
+      case L3G:
+      {
+        L3 = 1;
+        break;
+      }
+      case L3B:
+      {
+        L3 = 2;
+        break;
+      }
+        // Left4 LED
+      case L4R:
+      {
+        L4 = 0;
+        break;
+      }
+      case L4G:
+      {
+        L4 = 1;
+        break;
+      }
+      case L4B:
+      {
+        L4 = 2;
+        break;
+      }
+      }
     }
   }
 }
@@ -660,30 +664,30 @@ void RandomEffect() // Lights the LEDs in a random sequense
     {
       if (lightRandom == 1)
       {
-        digitalWrite(Left1R, lightRandom);
+        digitalWrite(Left1R, HIGH);
       }
       else if (lightRandom == 2)
       {
-        digitalWrite(Left1G, lightRandom);
+        digitalWrite(Left1G, HIGH);
       }
       else
       {
-        digitalWrite(Left1B, lightRandom);
+        digitalWrite(Left1B, HIGH);
       }
     }
     if (leftRandom = 2)
     {
       if (lightRandom == 1)
       {
-        digitalWrite(Left2R, lightRandom);
+        digitalWrite(Left2R, HIGH);
       }
       else if (lightRandom == 2)
       {
-        digitalWrite(Left2G, lightRandom);
+        digitalWrite(Left2G, HIGH);
       }
       else
       {
-        digitalWrite(Left2B, lightRandom);
+        digitalWrite(Left2B, HIGH);
       }
     }
     if (leftRandom = 3)
@@ -799,18 +803,4 @@ void loop()
   ReciveBT(); // Checks the bluetooth connection
 
   SendBT(); // Sends the current fan RPM to app
-
-  /* // Checks which effect is choosen and runs it
-  if (EffectChoise = 1)
-  {
-    FlashingSound();
-  }
-  else if (EffectChoise = 2)
-  {
-    SpinEffect();
-  }
-  else
-  {
-    RandomEffect();
-  }*/
 }

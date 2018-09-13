@@ -8,6 +8,7 @@ Im updating as im going along. also, nothing is tested yet, so if you would make
 - [Effects List](#effects)
 - [Latest Update](#latest-update)
 - [Example](#example)
+- [Required Hardware](#required-hardware)
 
 
 ## What Is This?
@@ -61,3 +62,13 @@ Below is a example of how it's going to look when finished. All the white boxes 
 ![Sorry, this image cant be viewed :/](https://github.com/Vinylwalk3r/ControlLED-Arduino/blob/master/image/ExampleSetup.JPG)
 
 A more detailed diagram of how to wire this thing up will come when it is released.
+
+## Required Hardware
+- Arduino Mega or similar (many ports needed)
+- 8 lights (can use less without recoding, but morer needs extra code)
+- Wires
+
+### Optional
+- Knob for manual fancontrol
+- Temperature sensor (for Arduino preferred)
+- Microphone
